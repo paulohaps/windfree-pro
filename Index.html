@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WindFree Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════
+   WINDFREE PRO — Design System Dark (GitHub Pages)
+   ═══════════════════════════════════════════ */
+:root{
+  --bg:       #090b10;
+  --s1:       #111520;
+  --s2:       #171c2a;
+  --s3:       #1d2235;
+  --bd:       rgba(255,255,255,0.065);
+  --bdhi:     rgba(255,255,255,0.12);
+  --tx:       #dce2f0;
+  --t2:       #7880a0;
+  --t3:       #3d4460;
+  --t4:       #252d42;
+  --blue:     #4f8ef7;
+  --b2:       #2563eb;
+  --bdim:     rgba(79,142,247,0.12);
+  --bglow:    0 0 28px rgba(79,142,247,0.3);
+  --green:    #2dd48e;
+  --gdim:     rgba(45,212,142,0.1);
+  --amber:    #f5a720;
+  --adim:     rgba(245,167,32,0.1);
+  --red:      #f06464;
+  --rdim:     rgba(240,100,100,0.1);
+  --purple:   #9d7ef5;
+  --pdim:     rgba(157,126,245,0.1);
+  --teal:     #2dd4bf;
+  --tdim:     rgba(45,212,191,0.1);
+  --r:        10px;
+  --r2:       14px;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--tx);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  font-size:14px;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 40% at 5% 0%,rgba(79,142,247,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 50% at 95% 90%,rgba(45,212,142,0.05) 0%,transparent 55%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
+  pointer-events:none;z-index:0;opacity:.6;
+}
+
+/* ── LAYOUT ── */
+.app{
+  max-width:800px;margin:0 auto;
+  padding:16px 13px 70px;
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:10px;
+}
+
+/* ── CARD ── */
+.card{
+  background:var(--s1);border:1px solid var(--bd);
+  border-radius:var(--r2);padding:18px;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.35),0 12px 32px rgba(0,0,0,.2);
+  animation:fadeUp .32s var(--ease) both;
+}
+.card:hover{border-color:var(--bdhi);}
+.card::before{
+  content:'';position:absolute;top:0;left:24px;right:24px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.055),transparent);
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.card:nth-child(1){animation-delay:.03s}.card:nth-child(2){animation-delay:.06s}
+.card:nth-child(3){animation-delay:.09s}.card:nth-child(4){animation-delay:.12s}
+.card:nth-child(5){animation-delay:.15s}.card:nth-child(6){animation-delay:.18s}
+.card:nth-child(7){animation-delay:.21s}.card:nth-child(8){animation-delay:.24s}
+.card:nth-child(9){animation-delay:.27s}.card:nth-child(10){animation-delay:.30s}
+
+/* ── SECTION LABEL ── */
+.slabel{
+  font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:2.2px;text-transform:uppercase;color:var(--t3);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.slabel::after{content:'';flex:1;height:1px;background:var(--bd);}
+
+/* ═══ HEADER ═══ */
+header{
+  background:var(--s1);border:1px solid var(--bd);
+  border-radius:var(--r2);padding:13px 18px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
+  animation:fadeUp .25s var(--ease) both;
+}
+header::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--blue) 35%,var(--teal) 65%,transparent 100%);
+  opacity:.4;
+}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.4px;line-height:1;}
+.logo em{font-style:normal;color:var(--blue);}
+.logo-sub{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.5px;margin-top:3px;display:block;}
+.hdr-r{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+
+/* Status badge */
+.sbadge{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:20px;
+  border:1px solid var(--bd);background:var(--s2);
+  font-family:var(--mono);font-size:10px;font-weight:500;color:var(--t2);
+  transition:all .3s var(--ease);
+}
+.sbadge.on{border-color:rgba(45,212,142,.4);background:var(--gdim);color:var(--green);}
+.sbadge.off{border-color:rgba(240,100,100,.35);background:var(--rdim);color:var(--red);}
+.sdot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;position:relative;}
+.sbadge.on .sdot::after{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  border:1.5px solid var(--green);
+  animation:ping 1.8s ease-out infinite;
+}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.4);opacity:0}}
+
+/* Countdown */
+.cdwn{
+  font-family:var(--mono);font-size:9.5px;
+  color:var(--teal);background:var(--tdim);
+  border:1px solid rgba(45,212,191,.2);
+  border-radius:6px;padding:3px 8px;min-width:54px;text-align:center;
+}
+.sync-clock{font-family:var(--mono);font-size:10px;color:var(--t3);}
+
+/* ═══ METRICS ═══ */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+@media(max-width:520px){.mgrid{grid-template-columns:repeat(2,1fr);}}
+.mt{
+  background:var(--s2);border:1px solid var(--bd);
+  border-radius:var(--r);padding:13px 11px;
+  position:relative;overflow:hidden;
+  transition:all .2s var(--ease);cursor:default;
+}
+.mt:hover{border-color:var(--bdhi);background:var(--s3);transform:translateY(-1px);}
+.mt::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;opacity:0;transition:opacity .2s;
+}
+.mt:hover::after{opacity:1;}
+.mt.cb::after{background:var(--blue);}
+.mt.cg::after{background:var(--green);}
+.mt.ca::after{background:var(--amber);}
+.mt.cp::after{background:var(--purple);}
+.mt.ct::after{background:var(--teal);}
+.mv{font-family:var(--mono);font-size:19px;font-weight:500;line-height:1;margin-bottom:5px;letter-spacing:-.5px;}
+.mv.cb{color:var(--blue);}
+.mv.cg{color:var(--green);}
+.mv.ca{color:var(--amber);}
+.mv.cp{color:var(--purple);}
+.mv.ct{color:var(--teal);}
+.mn{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
+@keyframes shim{0%{opacity:.2}50%{opacity:.45}100%{opacity:.2}}
+.loading{animation:shim 1.6s ease-in-out infinite;}
+
+/* ═══ AI PANEL ═══ */
+.ai-box{
+  background:var(--s2);border:1px solid rgba(79,142,247,.22);
+  border-radius:var(--r);padding:15px;position:relative;overflow:hidden;
+}
+.ai-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(79,142,247,.5),transparent);
+}
+.ai-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.ai-title{
+  font-family:var(--mono);font-size:9.5px;font-weight:500;
+  color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:7px;
+}
+.ai-pulse{
+  width:7px;height:7px;border-radius:50%;background:var(--blue);
+  box-shadow:0 0 8px rgba(79,142,247,.7);
+  animation:aip 2s ease-in-out infinite;
+}
+@keyframes aip{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+.ptag{
+  font-family:var(--mono);font-size:8.5px;padding:3px 9px;
+  border-radius:10px;border:1px solid var(--bd);
+  background:var(--s1);color:var(--t2);
+  letter-spacing:1px;text-transform:uppercase;transition:all .3s;
+}
+.ptag.economy{color:var(--green);border-color:rgba(45,212,142,.35);background:var(--gdim);}
+.ptag.comfort{color:var(--amber);border-color:rgba(245,167,32,.35);background:var(--adim);}
+.ptag.balanced{color:var(--blue);border-color:rgba(79,142,247,.35);background:var(--bdim);}
+.ai-body{font-size:13px;color:var(--tx);line-height:1.65;margin-bottom:9px;}
+.ai-tip{
+  font-family:var(--mono);font-size:10.5px;color:var(--teal);
+  padding:8px 11px;background:var(--tdim);
+  border:1px solid rgba(45,212,191,.2);border-radius:7px;
+  line-height:1.5;margin-bottom:7px;
+}
+.ai-meta{display:flex;gap:12px;flex-wrap:wrap;}
+.ai-stat{font-family:var(--mono);font-size:10px;color:var(--t3);}
+.ai-stat span{color:var(--t2);}
+.ai-empty{text-align:center;padding:16px;font-family:var(--mono);font-size:9.5px;color:var(--t4);letter-spacing:1px;}
+
+/* ═══ COST ═══ */
+.cost-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px;}
+.ig{display:flex;flex-direction:column;gap:4px;}
+.il{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
+.ctiles{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px;}
+@media(max-width:460px){.ctiles{grid-template-columns:repeat(2,1fr);}}
+.ct2{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 9px;text-align:center;transition:all .2s;}
+.ct2:hover{border-color:rgba(245,167,32,.3);background:var(--adim);}
+.ca{font-family:var(--mono);font-size:16px;font-weight:500;color:var(--amber);letter-spacing:-.3px;}
+.cp2{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:3px;}
+
+/* ═══ CHART ═══ */
+.cw{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;}
+.ci{position:relative;height:185px;padding:12px;}
+.ci.tall{height:225px;}
+.hhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+
+/* ═══ TEMP CONTROL ═══ */
+.ctrl{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.stepper{display:flex;align-items:center;gap:3px;}
+.sbt{
+  width:42px;height:42px;background:var(--s2);
+  border:1px solid var(--bd);border-radius:var(--r);
+  color:var(--t2);font-size:22px;font-family:var(--mono);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .15s var(--ease);flex-shrink:0;
+}
+.sbt:hover{background:var(--bdim);border-color:rgba(79,142,247,.4);color:var(--blue);transform:scale(1.05);}
+.sbt:active{transform:scale(.9);}
+.tdisp{padding:0 16px;text-align:center;}
+.tbig{
+  font-family:var(--mono);font-size:68px;font-weight:500;
+  line-height:1;letter-spacing:-4px;color:var(--blue);
+  text-shadow:0 0 50px rgba(79,142,247,.3);
+}
+.tsym{font-size:26px;font-weight:300;letter-spacing:0;color:var(--t3);}
+.tcap{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-top:5px;}
+
+/* Power button */
+.pwrap{display:flex;flex-direction:column;align-items:center;gap:7px;}
+.pbt{
+  width:78px;height:78px;border-radius:50%;
+  background:var(--s2);border:2px solid var(--bd);
+  cursor:pointer;position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  transition:all .25s var(--ease);
+}
+.pbt::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid transparent;transition:all .3s;}
+.pbt.on{border-color:rgba(45,212,142,.5);background:var(--gdim);box-shadow:0 0 28px rgba(45,212,142,.18);}
+.pbt.on::before{border-color:rgba(45,212,142,.2);}
+.pbt.off{border-color:rgba(240,100,100,.4);background:var(--rdim);}
+.pbt.off::before{border-color:rgba(240,100,100,.15);}
+.pbt:hover{transform:scale(1.06);}
+.pbt:active{transform:scale(.95);}
+.picon{font-size:26px;line-height:1;}
+.plbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:2px;}
+.pbt.on .plbl{color:var(--green);}
+.pbt.off .plbl{color:var(--red);}
+
+/* ═══ SELECTS / INPUTS ═══ */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+@media(max-width:480px){.sgrid{grid-template-columns:1fr 1fr;}}
+.sg{display:flex;flex-direction:column;gap:4px;}
+.sl{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
+
+input[type=number],input[type=time],select{
+  background:var(--s2);border:1px solid var(--bd);
+  border-radius:var(--r);padding:8px 10px;
+  font-family:var(--sans);font-size:13px;color:var(--tx);
+  transition:border-color .18s,box-shadow .18s;
+  -webkit-appearance:none;width:100%;
+}
+input[type=number]:focus,input[type=time]:focus,select:focus{
+  outline:none;border-color:rgba(79,142,247,.5);
+  box-shadow:0 0 0 3px rgba(79,142,247,.08);
+}
+select{
+  appearance:none;padding-right:28px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5' stroke='%233d4460' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;
+}
+select option{background:var(--s2);color:var(--tx);}
+input[type=number]{width:auto;}
+
+/* ═══ TOGGLES ═══ */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;}
+.tt{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 13px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:var(--r);cursor:pointer;transition:all .18s var(--ease);user-select:none;
+}
+.tt:hover{border-color:var(--bdhi);background:var(--s3);}
+.tt.on{border-color:rgba(79,142,247,.35);background:linear-gradient(135deg,rgba(79,142,247,.08) 0%,var(--s2) 100%);}
+.tname{font-size:13px;font-weight:600;color:var(--tx);}
+.tdesc{font-family:var(--mono);font-size:8.5px;color:var(--t3);margin-top:2px;}
+.tsw{
+  width:35px;height:19px;border-radius:9.5px;
+  background:var(--s3);border:1px solid var(--bd);
+  position:relative;flex-shrink:0;transition:all .22s;
+}
+.tt.on .tsw{background:var(--blue);border-color:var(--blue);box-shadow:0 0 10px rgba(79,142,247,.35);}
+.tsw::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:13px;height:13px;border-radius:50%;background:var(--t3);
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),background .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+.tt.on .tsw::after{transform:translateX(16px);background:#fff;}
+
+/* ═══ PRESETS ═══ */
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
+@media(max-width:440px){.pgrid{grid-template-columns:repeat(3,1fr);}}
+.pbt2{
+  background:var(--s2);border:1px solid var(--bd);
+  border-radius:var(--r);padding:14px 5px;
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-family:var(--sans);transition:all .15s var(--ease);
+}
+.pbt2:hover{border-color:rgba(79,142,247,.35);background:var(--bdim);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.pbt2:active{transform:scale(.94) translateY(0);}
+.pe{font-size:22px;line-height:1;}
+.pn{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;}
+
+/* ═══ TIMERS ═══ */
+.tgr{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+@media(max-width:420px){.tgr{grid-template-columns:1fr;}}
+.tbox{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:13px;}
+.ttl{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px;}
+.tr{display:flex;gap:5px;align-items:center;}
+.tstat{margin-top:6px;font-family:var(--mono);font-size:9.5px;color:var(--amber);min-height:13px;}
+.tex{display:flex;gap:5px;margin-top:7px;}
+
+/* ═══ AUTOMATIONS ═══ */
+.aform{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-end;}
+.alist{margin-top:10px;display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;}
+.alist::-webkit-scrollbar{width:4px;}
+.alist::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px;}
+.aitem{
+  background:var(--bg);border:1px solid var(--bd);
+  border-radius:7px;padding:9px 13px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:border-color .18s;
+}
+.aitem:hover{border-color:var(--bdhi);}
+.aitxt{font-family:var(--mono);font-size:10.5px;color:var(--t2);}
+.aitxt b{color:var(--tx);font-weight:500;}
+.adel{background:none;border:none;color:var(--t3);cursor:pointer;font-size:13px;padding:3px 7px;border-radius:5px;transition:all .15s;}
+.adel:hover{color:var(--red);background:var(--rdim);}
+.empty-st{text-align:center;padding:20px;font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;}
+
+/* ═══ BUTTONS ═══ */
+.btn{
+  padding:9px 15px;border-radius:var(--r);
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  cursor:pointer;border:none;transition:all .15s var(--ease);
+  display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.btn:active{transform:scale(.93);}
+.bp{background:var(--blue);color:#fff;box-shadow:0 0 20px rgba(79,142,247,.2);}
+.bp:hover{background:var(--b2);box-shadow:0 0 28px rgba(79,142,247,.35);transform:translateY(-1px);}
+.bg2{background:var(--gdim);color:var(--green);border:1px solid rgba(45,212,142,.3);}
+.bg2:hover{background:rgba(45,212,142,.18);}
+.bv{background:var(--pdim);color:var(--purple);border:1px solid rgba(157,126,245,.3);}
+.bv:hover{background:rgba(157,126,245,.18);}
+.bgh{background:var(--s2);color:var(--t2);border:1px solid var(--bd);}
+.bgh:hover{border-color:var(--bdhi);color:var(--tx);}
+.bd2{background:var(--rdim);color:var(--red);border:1px solid rgba(240,100,100,.25);}
+.bd2:hover{background:rgba(240,100,100,.18);}
+.bsm{padding:6px 11px;font-size:12px;border-radius:7px;}
+.bxs{padding:4px 9px;font-size:11px;border-radius:6px;}
+
+/* ═══ BOTTOM BAR ═══ */
+.bbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.bbar-r{display:flex;align-items:center;gap:7px;margin-left:auto;}
+.rlbl{font-family:var(--mono);font-size:9.5px;color:var(--t3);}
+
+/* ═══ TOAST ═══ */
+#toast{
+  position:fixed;bottom:20px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--s1);border:1px solid var(--bdhi);border-radius:var(--r);
+  padding:10px 18px;font-size:13px;font-weight:500;
+  box-shadow:0 8px 40px rgba(0,0,0,.65);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  z-index:9999;white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.ok  {border-color:rgba(45,212,142,.4);color:var(--green);background:rgba(8,18,14,.97);}
+#toast.err {border-color:rgba(240,100,100,.4);color:var(--red);background:rgba(18,8,8,.97);}
+#toast.info{border-color:rgba(245,167,32,.4);color:var(--amber);background:rgba(18,14,6,.97);}
+#toast.ai  {border-color:rgba(79,142,247,.4);color:var(--blue);background:rgba(6,10,18,.97);}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bdhi);border-radius:5px;}
+</style>
+</head>
+<body>
+  <div class="app">
+
+  <header>
+    <div>
+      <div class="logo">Wind<em>Free</em> Pro</div>
+      <span class="logo-sub">API REST · DeepSeek AI · GitHub</span>
+    </div>
+    <div class="hdr-r">
+      <span class="cdwn" id="cdwn">⟳ --s</span>
+      <div class="sbadge off" id="badge">
+        <div class="sdot"></div>
+        <span id="badge-txt">—</span>
+      </div>
+      <div class="sync-clock" id="sclock">—</div>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="slabel">Sensores em tempo real</div>
+    <div class="mgrid">
+      <div class="mt cb"><div class="mv cb loading" id="m-temp">--°C</div><div class="mn">Temp. Amb.</div></div>
+      <div class="mt cp"><div class="mv cp loading" id="m-umid">--%</div><div class="mn">Umidade</div></div>
+      <div class="mt ca"><div class="mv ca loading" id="m-watts">-- W</div><div class="mn">Potência</div></div>
+      <div class="mt ct"><div class="mv ct loading" id="m-kwh">-- kWh</div><div class="mn">Total kWh</div></div>
+      <div class="mt"><div class="mv loading" id="m-fan">--</div><div class="mn">Ventilador</div></div>
+      <div class="mt"><div class="mv loading" id="m-oscil">--</div><div class="mn">Aletas</div></div>
+      <div class="mt cg"><div class="mv cg loading" id="m-eco">--</div><div class="mn">AI Saving</div></div>
+      <div class="mt"><div class="mv loading" id="m-opt">--</div><div class="mn">Modo Extra</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Insights da IA · DeepSeek</div>
+    <div class="ai-box">
+      <div class="ai-head">
+        <div class="ai-title"><div class="ai-pulse"></div>Análise de Perfil</div>
+        <span class="ptag balanced" id="ptag">balanced</span>
+      </div>
+      <div id="ai-content"><div class="ai-empty">Clique em "IA Economia" ou "Perfil IA" para analisar</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Calculadora de custo energético</div>
+    <div class="cost-row">
+      <div class="ig"><div class="il">Tarifa R$/kWh</div>
+        <input type="number" id="kwh-rate" value="1.15" min="0.01" step="0.01" style="width:96px" oninput="savePref('r',this.value);recalcCost()">
+      </div>
+      <div class="ig"><div class="il">Uso diário (h)</div>
+        <input type="number" id="daily-h" value="10" min="1" max="24" step="0.5" style="width:76px" oninput="savePref('h',this.value);recalcCost()">
+      </div>
+    </div>
+    <div class="ctiles">
+      <div class="ct2"><div class="ca" id="c-hora">--</div><div class="cp2">Por hora</div></div>
+      <div class="ct2"><div class="ca" id="c-dia">--</div><div class="cp2">Por dia</div></div>
+      <div class="ct2"><div class="ca" id="c-semana">--</div><div class="cp2">Por semana</div></div>
+      <div class="ct2"><div class="ca" id="c-mes">--</div><div class="cp2">Por mês</div></div>
+    </div>
+    <div class="cw"><div class="ci"><canvas id="costChart"></canvas></div></div>
+  </div>
+
+  <div class="card">
+    <div class="hhead">
+      <div class="slabel" style="margin:0;flex:1">Histórico de telemetria</div>
+      <div style="display:flex;gap:4px">
+        <button class="btn bgh bxs" onclick="apiCall('sync', null, 'loadHistory')">Recarregar Gráfico</button>
+      </div>
+    </div>
+    <div class="cw" style="margin-top:9px"><div class="ci tall"><canvas id="histChart"></canvas></div></div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Temperatura & energia</div>
+    <div class="ctrl">
+      <div class="stepper">
+        <button class="sbt" onclick="adjustTemp(-1)">−</button>
+        <div class="tdisp">
+          <div class="tbig" id="temp-disp">23<span class="tsym">°</span></div>
+          <div class="tcap">Setpoint ºC</div>
+        </div>
+        <button class="sbt" onclick="adjustTemp(+1)">+</button>
+      </div>
+      <div class="pwrap">
+        <button class="pbt off" id="pbt" onclick="togglePower()">
+          <span class="picon">⏻</span>
+          <span class="plbl" id="ptxt">--</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Operação</div>
+    <div class="sgrid">
+      <div class="sg"><div class="sl">Modo</div>
+        <select id="sel-modo" onchange="apiCall('setMode', this.value, 'Modo alterado ✓')">
+          <option value="cool">❄️ Refrigeração</option>
+          <option value="heat">🔥 Aquecimento</option>
+          <option value="auto">⚙️ Automático</option>
+          <option value="dry">💧 Desumidificar</option>
+          <option value="fan">🌀 Ventilação</option>
+          <option value="wind">🌬️ WindFree</option>
+        </select>
+      </div>
+      <div class="sg"><div class="sl">Velocidade</div>
+        <select id="sel-fan" onchange="apiCall('setFan', this.value, 'Ventilador alterado ✓')">
+          <option value="auto">Auto</option>
+          <option value="low">Baixa</option>
+          <option value="medium">Média</option>
+          <option value="high">Alta</option>
+          <option value="turbo">Turbo</option>
+        </select>
+      </div>
+      <div class="sg"><div class="sl">Aletas</div>
+        <select id="sel-oscil" onchange="apiCall('setOscil', this.value, 'Aletas alteradas ✓')">
+          <option value="auto">Auto</option>
+          <option value="swing">Swing</option>
+          <option value="up">Cima</option>
+          <option value="middle">Centro</option>
+          <option value="down">Baixo</option>
+          <option value="fixed">Fixo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Modos especiais</div>
+    <div class="tgrid">
+      <div class="tt" id="tog-aiSaving"  onclick="toggleFeat('aiSaving')">  <div><div class="tname">AI Saving</div><div class="tdesc">Economia inteligente</div></div><div class="tsw"></div></div>
+      <div class="tt" id="tog-quiet"     onclick="toggleFeat('quiet')">     <div><div class="tname">Quiet</div><div class="tdesc">Modo silencioso</div></div><div class="tsw"></div></div>
+      <div class="tt" id="tog-windFree"  onclick="toggleFeat('windFree')">  <div><div class="tname">WindFree</div><div class="tdesc">Sem vento direto</div></div><div class="tsw"></div></div>
+      <div class="tt" id="tog-autoClean" onclick="toggleFeat('autoClean')"> <div><div class="tname">Auto Clean</div><div class="tdesc">Limpeza automática</div></div><div class="tsw"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Presets otimizados WindFree</div>
+    <div class="pgrid">
+      <button class="pbt2" onclick="applyPreset('sleep')"> <span class="pe">🌙</span><span class="pn">Dormir</span></button>
+      <button class="pbt2" onclick="applyPreset('eco')">   <span class="pe">🌿</span><span class="pn">Eco</span></button>
+      <button class="pbt2" onclick="applyPreset('work')">  <span class="pe">💼</span><span class="pn">Trabalho</span></button>
+      <button class="pbt2" onclick="applyPreset('turbo')"> <span class="pe">⚡</span><span class="pn">Turbo</span></button>
+      <button class="pbt2" onclick="applyPreset('away')">  <span class="pe">🚪</span><span class="pn">Saindo</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Agendamento</div>
+    <div class="tgr">
+      <div class="tbox">
+        <div class="ttl">Desligamento automático</div>
+        <div class="tr">
+          <input type="number" id="off-min" min="1" max="1440" placeholder="min" style="width:72px">
+          <button class="btn bp bsm" onclick="setOffTimer()">Ativar</button>
+          <button class="btn bd2 bsm" onclick="apiCall('cancelOffTimer', null, 'Timer cancelado')">✕</button>
+        </div>
+        <div class="tstat" id="off-stat"></div>
+      </div>
+      <div class="tbox">
+        <div class="ttl">Ligamento agendado</div>
+        <div class="tr">
+          <input type="number" id="on-min" min="1" max="1440" placeholder="min" style="width:72px">
+          <button class="btn bp bsm" onclick="setOnTimer()">Ativar</button>
+        </div>
+        <div class="tex">
+          <select id="on-mode" style="flex:1"><option value="cool">Cool</option><option value="heat">Heat</option><option value="auto">Auto</option></select>
+          <input type="number" id="on-temp" min="16" max="30" value="23" style="width:54px">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slabel">Automações por horário</div>
+    <div class="aform">
+      <div class="ig"><div class="il">Hora</div><input type="time" id="auto-hora" style="width:110px"></div>
+      <div class="ig"><div class="il">Ação</div>
+        <select id="auto-acao" style="width:112px">
+          <option value="ligar">Ligar</option>
+          <option value="desligar">Desligar</option>
+          <option value="preset">Preset</option>
+        </select>
+      </div>
+      <div class="ig"><div class="il">Modo</div>
+        <select id="auto-modo" style="width:138px">
+          <option value="cool">Cool</option><option value="heat">Heat</option>
+          <option value="auto">Auto</option><option value="sleep">Preset Dormir</option>
+          <option value="eco">Preset Eco</option><option value="work">Preset Trabalho</option>
+        </select>
+      </div>
+      <div class="ig"><div class="il">°C</div><input type="number" id="auto-temp" min="16" max="30" value="23" style="width:60px"></div>
+      <div class="ig"><div class="il" style="opacity:0">_</div><button class="btn bp bsm" onclick="addAuto()">+ Adicionar</button></div>
+    </div>
+    <div class="alist" id="alist"><div class="empty-st">Nenhuma automação cadastrada</div></div>
+  </div>
+
+  <div class="bbar">
+    <button class="btn bp"  onclick="syncNow()">↻ Sincronizar</button>
+    <button class="btn bg2" onclick="reqOpt()">✦ IA Economia</button>
+    <button class="btn bv"  onclick="reqProfile()">◈ Perfil IA</button>
+    <div class="bbar-r">
+      <span class="rlbl">Auto-sync</span>
+      <select id="ref-sel" onchange="changeRefresh()" style="width:118px">
+        <option value="30">30 segundos</option>
+        <option value="60" selected>1 minuto</option>
+        <option value="120">2 minutos</option>
+        <option value="300">5 minutos</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+<div id="toast"></div>
+
+// Parte 3 (Lógica JavaScript REST)
+<script>
+// ════════════════════════════════════════════════════════════
+//  WINDFREE PRO — Frontend Logic REST API (GitHub Pages)
+//  Comunicação Assíncrona com Google Apps Script
+// ════════════════════════════════════════════════════════════
+
+// 🔴 INSIRA A URL DO SEU GOOGLE APPS SCRIPT AQUI 🔴
+// Exemplo: "https://script.google.com/macros/s/AKfycb.../exec"
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzhLRwOcuHEBYMatY-aqfaxqvwJ-fXO36YHzXNSfhNQsE_mBJDLaZ2MZtjzFe8SJey1Qg/exec";
+
+/* ── STATE & GLOBAIS ── */
+let S = { power:false, tempAlvo:23, modo:'cool', fanSpeed:'auto', fanOscil:'auto', economia:false, modoOpcional:'off', potencia:0 };
+let togg = { aiSaving:false, quiet:false, windFree:false, autoClean:false };
+let histChart = null, costChart = null, toastT, cdwnTimer = null, cdwnVal = 60, refreshSec = 60;
+
+/* ── CHART DEFAULTS ── */
+Chart.defaults.color = '#3d4460';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.045)';
+Chart.defaults.font.family = "'JetBrains Mono',monospace";
+Chart.defaults.font.size = 10;
+
+/* ── PREFS (LocalStorage) ── */
+function loadPrefs() {
+  const r = localStorage.getItem('wfr'); const h = localStorage.getItem('wfh');
+  if (r) { const el = document.getElementById('kwh-rate'); if(el) el.value = r; }
+  if (h) { const el = document.getElementById('daily-h');  if(el) el.value = h; }
+}
+function savePref(k, v) { localStorage.setItem(k === 'r' ? 'wfr' : 'wfh', v); }
+
+/* ── TOAST (Notificações Visuais) ── */
+function toast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show ' + type;
+  clearTimeout(toastT);
+  toastT = setTimeout(() => { t.className = ''; }, 3400);
+}
+
+/* ════════════════════════════════════════════════════════════
+   CORE DA API — FETCH ASSÍNCRONO
+   ════════════════════════════════════════════════════════════ */
+async function apiCall(action, payloadData = {}, okMsg = '') {
+  if (GAS_URL === "https://script.google.com/macros/s/AKfycbzhLRwOcuHEBYMatY-aqfaxqvwJ-fXO36YHzXNSfhNQsE_mBJDLaZ2MZtjzFe8SJey1Qg/exec" || GAS_URL === "") {
+    toast("⚠️ URL do Google Apps Script não configurada no JS!", "err");
+    return null;
+  }
+
+  // Prepara o objeto requisição
+  const payload = { action: action, ...payloadData };
+
+  try {
+    // Usamos text/plain para contornar o bloqueio CORS (Preflight) do navegador
+    const response = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.error || "Erro desconhecido no servidor.");
+    }
+
+    if (okMsg) toast(okMsg, 'ok');
+    return result.data;
+
+  } catch (error) {
+    console.error(`[API Error - ${action}]:`, error);
+    toast('Falha de comunicação: ' + error.message, 'err');
+    throw error;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   SYNC & ESTADO DA INTERFACE
+   ════════════════════════════════════════════════════════════ */
+async function syncNow() {
+  try {
+    const data = await apiCall('sync');
+    if (data) applyState(data);
+  } catch (e) {
+    // O erro já é tratado pelo toast na função apiCall
+  }
+}
+
+function applyState(d) {
+  S = Object.assign({}, S, d);
+  const on = d.power;
+
+  /* Header Badge */
+  const badge = document.getElementById('badge');
+  badge.className = 'sbadge ' + (on ? 'on' : 'off');
+  document.getElementById('badge-txt').textContent = on ? 'Ligado' : 'Offline';
+  document.getElementById('sclock').textContent = new Date().toLocaleTimeString('pt-BR');
+
+  /* Métricas */
+  const setM = (id, v) => { const el = document.getElementById(id); if(!el) return; el.textContent = v; el.classList.remove('loading'); };
+  setM('m-temp',  d.temperatura != null ? d.temperatura + '°C' : '--');
+  setM('m-umid',  d.umidade != null     ? d.umidade + '%'      : '--');
+  setM('m-watts', d.potencia != null    ? d.potencia + ' W'    : '--');
+  setM('m-kwh',   d.energia != null     ? d.energia + ' kWh'   : '--');
+  setM('m-fan',   (d.fanSpeed || '--').toUpperCase());
+  setM('m-oscil', (d.fanOscil || '--').toUpperCase());
+  setM('m-eco',   d.economia ? 'Ativo' : 'Inativo');
+  setM('m-opt',   (d.modoOpcional || '--').toUpperCase());
+
+  /* Power Button */
+  const pb = document.getElementById('pbt');
+  pb.className = 'pbt ' + (on ? 'on' : 'off');
+  document.getElementById('ptxt').textContent = on ? 'ON' : 'OFF';
+
+  /* Temperatura */
+  if (d.tempAlvo && d.tempAlvo !== '--') {
+    S.tempAlvo = Number(d.tempAlvo);
+    document.getElementById('temp-disp').innerHTML = S.tempAlvo + '<span class="tsym">°</span>';
+  }
+
+  /* Selects */
+  const setSel = (id, v) => { const el = document.getElementById(id); if(el && v) el.value = v; };
+  setSel('sel-modo', d.modo);
+  setSel('sel-fan', d.fanSpeed);
+  setSel('sel-oscil', d.fanOscil);
+
+  /* Toggles Especiais */
+  togg.aiSaving  = !!d.economia;
+  togg.quiet     = d.modoOpcional === 'quiet';
+  togg.windFree  = d.modoOpcional === 'windFree';
+  togg.autoClean = d.autoClean === 'on';
+  renderToggs();
+
+  recalcCost();
+  checkTimerStatus();
+}
+
+function renderToggs() {
+  Object.keys(togg).forEach(k => {
+    const el = document.getElementById('tog-' + k);
+    if(el) el.classList.toggle('on', !!togg[k]);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   MOTOR DE AUTO-SYNC BACKGROUND NATIVO DO BROWSER
+   ════════════════════════════════════════════════════════════ */
+function startRefresh(sec) {
+  clearInterval(cdwnTimer);
+  refreshSec = sec; cdwnVal = sec;
+  updateCdwn();
+  cdwnTimer = setInterval(() => {
+    cdwnVal--;
+    if (cdwnVal <= 0) { cdwnVal = refreshSec; syncNow(); }
+    updateCdwn();
+  }, 1000);
+}
+
+function updateCdwn() {
+  const el = document.getElementById('cdwn');
+  if(el) el.textContent = '⟳ ' + cdwnVal + 's';
+}
+
+function changeRefresh() {
+  const el = document.getElementById('ref-sel');
+  const s = Number(el ? el.value : 60);
+  startRefresh(s);
+  toast('Auto-sync: ' + (s < 60 ? s + 's' : (s / 60) + 'min') + ' ativado', 'info');
+}
+
+/* ════════════════════════════════════════════════════════════
+   CUSTOS E GRÁFICOS
+   ════════════════════════════════════════════════════════════ */
+function recalcCost() {
+  const rate = parseFloat(document.getElementById('kwh-rate').value) || 1.15;
+  const hours = parseFloat(document.getElementById('daily-h').value) || 10;
+  const watts = S.potencia || 0;
+  
+  if (!watts) {
+    ['c-hora','c-dia','c-semana','c-mes'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.textContent = 'R$ --';
+    });
+    if(costChart) { costChart.data.datasets[0].data = [0,0,0,0]; costChart.update('none'); }
+    return;
+  }
+
+  const kw = watts / 1000, h = kw * rate, d = h * hours, s = d * 7, m = d * 30;
+  const fv = (id, v, dec) => { const el = document.getElementById(id); if(el) el.textContent = 'R$ ' + v.toFixed(dec); };
+  
+  fv('c-hora', h, 3); fv('c-dia', d, 2); fv('c-semana', s, 2); fv('c-mes', m, 2);
+  
+  if(!costChart) buildCostChart([h, d, s, m]);
+  else { costChart.data.datasets[0].data = [h, d, s, m]; costChart.update(); }
+}
+
+function buildCostChart(vals) {
+  const ctx = document.getElementById('costChart').getContext('2d');
+  costChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Hora', 'Dia', 'Semana', 'Mês'],
+      datasets: [{
+        data: vals,
+        backgroundColor: ['rgba(245,167,32,.12)','rgba(245,167,32,.22)','rgba(245,167,32,.38)','rgba(245,167,32,.6)'],
+        borderColor: ['rgba(245,167,32,.45)','rgba(245,167,32,.6)','rgba(245,167,32,.8)','rgba(245,167,32,1)'],
+        borderWidth: 1, borderRadius: 5, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'R$ ' + c.parsed.y.toFixed(c.dataIndex === 0 ? 3 : 2) } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#3d4460' } },
+        y: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#3d4460', callback: v => 'R$' + v.toFixed(1) } }
+      }
+    }
+  });
+}
+
+/* Opcional: Para carregar o histórico de telemetria da IA */
+function loadHistory() {
+  toast("Histórico automatizado no Backend.", "info");
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONTROLES DIRETOS (Optimistic UI)
+   ════════════════════════════════════════════════════════════ */
+async function togglePower() {
+  const novo = !S.power; 
+  S.power = novo;
+  
+  // Atualização Visual Otimista
+  const pb = document.getElementById('pbt');
+  pb.className = 'pbt ' + (novo ? 'on' : 'off');
+  document.getElementById('ptxt').textContent = novo ? 'ON' : 'OFF';
+  toast(novo ? 'Ligando…' : 'Desligando…', 'info');
+
+  try {
+    await apiCall('setPower', { value: novo ? 'on' : 'off' }, novo ? '✓ Ligado' : '✓ Desligado');
+    setTimeout(syncNow, 3000);
+  } catch (e) {
+    // Reverte visualmente em caso de falha
+    S.power = !novo; 
+    pb.className = 'pbt ' + (S.power ? 'on' : 'off');
+    document.getElementById('ptxt').textContent = S.power ? 'ON' : 'OFF';
+  }
+}
+
+async function adjustTemp(delta) {
+  const t = Math.min(30, Math.max(16, S.tempAlvo + delta));
+  if(t === S.tempAlvo) return;
+  
+  S.tempAlvo = t;
+  document.getElementById('temp-disp').innerHTML = t + '<span class="tsym">°</span>';
+  
+  try {
+    await apiCall('setTemp', { value: t }, '→ ' + t + '°C ✓');
+  } catch (e) {}
+}
+
+async function toggleFeat(f) {
+  togg[f] = !togg[f]; 
+  renderToggs();
+  const v = togg[f];
+  
+  const mapAction = { aiSaving: 'setAiSaving', quiet: 'setQuiet', windFree: 'setWindFree', autoClean: 'setAutoClean' };
+  
+  try {
+    await apiCall(mapAction[f], { value: v }, f + ': ' + (v ? 'Ativo' : 'Inativo') + ' ✓');
+  } catch (e) {
+    togg[f] = !v; // reverte
+    renderToggs();
+  }
+}
+
+async function applyPreset(name) {
+  toast('Aplicando Preset "' + name + '"…', 'info');
+  try {
+    await apiCall('applyPreset', { value: name });
+    setTimeout(syncNow, 3000);
+  } catch (e) {}
+}
+
+/* ════════════════════════════════════════════════════════════
+   AGENDAMENTOS E AUTOMAÇÕES
+   ════════════════════════════════════════════════════════════ */
+async function setOffTimer() {
+  const m = Number(document.getElementById('off-min').value);
+  if(!m || m < 1) { toast('Informe os minutos', 'err'); return; }
+  try {
+    await apiCall('setOffTimer', { minutes: m }, 'Desligamento programado.');
+    checkTimerStatus();
+  } catch (e) {}
+}
+
+async function setOnTimer() {
+  const m = Number(document.getElementById('on-min').value);
+  if(!m || m < 1) { toast('Informe os minutos', 'err'); return; }
+  const mode = document.getElementById('on-mode').value;
+  const temp = Number(document.getElementById('on-temp').value) || 23;
+  
+  await apiCall('setOnTimer', { minutes: m, mode: mode, temp: temp }, 'Ligamento programado.');
+}
+
+async function checkTimerStatus() {
+  try {
+    const s = await apiCall('getTimerStatus');
+    const el = document.getElementById('off-stat');
+    if(el && s) el.textContent = s.active ? '⏱ Desliga em ' + s.remaining + ' min' : '';
+  } catch (e) {}
+}
+
+async function addAuto() {
+  const hora = document.getElementById('auto-hora').value;
+  if(!hora) { toast('Selecione a hora', 'err'); return; }
+  
+  const rule = { 
+    hora: hora, 
+    acao: document.getElementById('auto-acao').value, 
+    modo: document.getElementById('auto-modo').value, 
+    temp: document.getElementById('auto-temp').value, 
+    ativo: true 
+  };
+
+  try {
+    await apiCall('addAuto', { rule: rule }, 'Automação salva.');
+    loadAutos();
+  } catch (e) {}
+}
+
+async function loadAutos() {
+  try {
+    const rules = await apiCall('getAutos');
+    const c = document.getElementById('alist');
+    if(!c) return;
+    
+    if(!rules || !rules.length) {
+      c.innerHTML = '<div class="empty-st">Nenhuma automação cadastrada</div>';
+      return;
+    }
+    
+    c.innerHTML = rules.map(r => `
+      <div class="aitem">
+        <span class="aitxt">${r.hora} → <b>${r.acao}</b> · ${r.modo||''} ${r.temp ? r.temp+'°C' : ''}</span>
+        <button class="adel" onclick="delAuto('${r.id}')">✕</button>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function delAuto(id) {
+  try {
+    await apiCall('delAuto', { id: id }, 'Automação removida.');
+    loadAutos();
+  } catch (e) {}
+}
+
+/* ════════════════════════════════════════════════════════════
+   INTELIGÊNCIA ARTIFICIAL (DeepSeek AI)
+   ════════════════════════════════════════════════════════════ */
+async function reqOpt() {
+  toast('Analisando com IA…', 'ai');
+  const p = document.getElementById('ai-content');
+  p.innerHTML = '<div class="ai-empty">⟳ Consultando DeepSeek…</div>';
+  
+  try {
+    const r = await apiCall('reqOptimization');
+    if (!r) return;
+
+    const b = document.getElementById('ptag');
+    if (b) { b.textContent = r.profile || 'balanced'; b.className = 'ptag ' + (r.profile || 'balanced'); }
+    
+    const st = r.stats || {};
+    p.innerHTML = `
+      <p class="ai-body">${r.advice || '--'}</p>
+      ${r.saving ? `<div class="ai-tip">💡 ${r.saving}</div>` : ''}
+      <div class="ai-meta">
+        <div class="ai-stat">Custo/mês: <span>${r.custoMes || '--'}</span></div>
+        <div class="ai-stat">Média 24h: <span>${st.medW || '--'} W</span></div>
+        <div class="ai-stat">Pico: <span>${st.picoW != null ? st.picoW + 'W' : '--'}</span></div>
+      </div>
+    `;
+    toast('✦ Análise concluída', 'ai');
+
+    if (r.action && r.action.type === 'setTemperature' && confirm('IA sugere: ' + r.advice + '\nAplicar ' + r.action.value + '°C?')) {
+      adjustTemp(r.action.value - S.tempAlvo);
+    }
+  } catch (e) {
+    p.innerHTML = '<div class="ai-empty" style="color:var(--red)">Falha ao contatar IA. Tente novamente.</div>';
+  }
+}
+
+async function reqProfile() {
+  toast('Analisando perfil…', 'ai');
+  const p = document.getElementById('ai-content');
+  p.innerHTML = '<div class="ai-empty">⟳ Mapeando comportamento…</div>';
+  
+  try {
+    const r = await apiCall('reqProfile');
+    if (!r) return;
+
+    const b = document.getElementById('ptag');
+    if (b) { b.textContent = r.profile || 'balanced'; b.className = 'ptag ' + (r.profile || 'balanced'); }
+    
+    const st = r.stats || {};
+    p.innerHTML = `
+      <p class="ai-body">${r.insight || '--'}</p>
+      ${r.suggestion ? `<div class="ai-tip">⚡ ${r.suggestion}</div>` : ''}
+      <div class="ai-meta">
+        ${r.presetRecommended ? `<div class="ai-stat">Preset Ideal: <span>${r.presetRecommended}</span></div>` : ''}
+        <div class="ai-stat">Modo dominante: <span>${st.modoDom || '--'}</span></div>
+      </div>
+    `;
+    toast('✦ Perfil analisado', 'ai');
+  } catch (e) {
+    p.innerHTML = '<div class="ai-empty" style="color:var(--red)">Falha ao mapear perfil. Tente novamente.</div>';
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   INICIALIZAÇÃO (Boot)
+   ════════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  loadPrefs();
+  syncNow();
+  loadAutos();
+  startRefresh(60);
+  setInterval(checkTimerStatus, 60000);
+});
+</script>
+</body>
+</html>
