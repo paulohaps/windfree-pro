@@ -675,12 +675,11 @@ function toast(msg, type = 'ok') {
 /* ════════════════════════════════════════════════════════════
    CORE DA API — FETCH ASSÍNCRONO
    ════════════════════════════════════════════════════════════ */
-async function apiCall(action, payloadData = {}, okMsg = '') {
-  if (GAS_URL === "https://script.google.com/macros/s/AKfycbzhLRwOcuHEBYMatY-aqfaxqvwJ-fXO36YHzXNSfhNQsE_mBJDLaZ2MZtjzFe8SJey1Qg/exec" || GAS_URL === "") {
-    toast("⚠️ URL do Google Apps Script não configurada no JS!", "err");
+if (!GAS_URL || GAS_URL.includes("COLE_SUA_URL")) {
+    toast("⚠️ URL do Google Apps Script não configurada!", "err");
     return null;
-  }
-
+}
+   
   // Prepara o objeto requisição
   const payload = { action: action, ...payloadData };
 
