@@ -323,7 +323,6 @@ input[type=number]{width:auto;}
           <option value="auto">⚙️ Automático</option>
           <option value="dry">💧 Desumidificar</option>
           <option value="fan">🌀 Ventilação</option>
-          <option value="wind">🌬️ WindFree</option>
         </select>
       </div>
       <div class="sg"><div class="sl">Velocidade</div>
@@ -351,7 +350,6 @@ input[type=number]{width:auto;}
   <div class="card">
     <div class="slabel">Modos especiais</div>
     <div class="tgrid">
-      <div class="tt" id="tog-aiSaving"  onclick="toggleFeat('aiSaving')">  <div><div class="tname">AI Saving</div><div class="tdesc">Economia inteligente</div></div><div class="tsw"></div></div>
       <div class="tt" id="tog-quiet"     onclick="toggleFeat('quiet')">     <div><div class="tname">Quiet</div><div class="tdesc">Modo silencioso</div></div><div class="tsw"></div></div>
       <div class="tt" id="tog-windFree"  onclick="toggleFeat('windFree')">  <div><div class="tname">WindFree</div><div class="tdesc">Sem vento direto</div></div><div class="tsw"></div></div>
       <div class="tt" id="tog-autoClean" onclick="toggleFeat('autoClean')"> <div><div class="tname">Auto Clean</div><div class="tdesc">Limpeza automática</div></div><div class="tsw"></div></div>
@@ -464,7 +462,8 @@ let state = {
   umidade: null
 };
 
-let refreshInterval = 60;
+let refreshInterval = 60; // 1 minuto quando página está visível
+let backgroundInterval = 600; // 10 minutos quando página está em segundo plano
 let refreshTimer    = null;
 let countdown       = 60;
 let countdownTimer  = null;
@@ -567,7 +566,6 @@ function updateUI(d) {
 
   // Toggles de modos especiais
   const opt = (d.modoOpcional || '').toLowerCase();
-  setToggle('tog-aiSaving',  d.economia === true || d.economia === 'true');
   setToggle('tog-quiet',     opt === 'quiet');
   setToggle('tog-windFree',  opt === 'windfree' || opt === 'wind_free');
   setToggle('tog-autoClean', (d.autoClean || '').toLowerCase() === 'on');
@@ -619,23 +617,29 @@ function adjustTemp(delta) {
   tempDebounce = setTimeout(() => apiCall('setTemp', t, 'Temp: ' + t + '°C ✓'), 800);
 }
 
-function toggleFeat(feat) {
-  const el  = document.getElementById('tog-' + feat);
+async function toggleFeat(feat) {
+  const el = document.getElementById('tog-' + feat);
   const isOn = el && el.classList.contains('on');
   const next = !isOn;
-
   const actions = {
-    aiSaving:  ['setAiSaving',  next],
     quiet:     ['setQuiet',     next],
     windFree:  ['setWindFree',  next],
     autoClean: ['setAutoClean', next]
   };
-
   const [action, val] = actions[feat] || [];
   if (!action) return;
-
+  if (next) {
+    if (feat === 'quiet') setToggle('tog-windFree', false);
+    if (feat === 'windFree') setToggle('tog-quiet', false);
+  }
   setToggle('tog-' + feat, next);
-  apiCall(action, val, feat + (next ? ' ON ✓' : ' OFF ✓'));
+  const result = await apiCall(action, val, feat + (next ? ' ON ✓' : ' OFF ✓'));
+  if (!result) {
+    setToggle('tog-' + feat, isOn);
+    if (feat === 'quiet' || feat === 'windFree') {
+      setTimeout(syncNow, 1500); 
+    }
+  }
 }
 
 function applyPreset(preset) {
@@ -901,18 +905,24 @@ function changeRefresh() {
 
 function resetAutoSync() {
   if (refreshTimer) clearInterval(refreshTimer);
-  refreshTimer = setInterval(syncNow, refreshInterval * 1000);
-  resetCountdown();
+  
+  // Usar intervalo baseado na visibilidade da página
+  const isPageVisible = !document.hidden;
+  const interval = isPageVisible ? refreshInterval : backgroundInterval;
+  
+  refreshTimer = setInterval(syncNow, interval * 1000);
+  resetCountdown(interval);
 }
 
-function resetCountdown() {
-  countdown = refreshInterval;
+function resetCountdown(interval = null) {
+  const currentInterval = interval || refreshInterval;
+  countdown = currentInterval;
   if (countdownTimer) clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
     countdown--;
     const el = document.getElementById('cdwn');
     if (el) el.textContent = '⟳ ' + countdown + 's';
-    if (countdown <= 0) countdown = refreshInterval;
+    if (countdown <= 0) countdown = currentInterval;
   }, 1000);
 }
 
@@ -961,3 +971,4 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
