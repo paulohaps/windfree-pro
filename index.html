@@ -1,974 +1,1018 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WindFree Pro</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<style>
-/* ═══════════════════════════════════════════
-   WINDFREE PRO — Design System Dark
-   ═══════════════════════════════════════════ */
-:root{
-  --bg:       #090b10;
-  --s1:       #111520;
-  --s2:       #171c2a;
-  --s3:       #1d2235;
-  --bd:       rgba(255,255,255,0.065);
-  --bdhi:     rgba(255,255,255,0.12);
-  --tx:       #dce2f0;
-  --t2:       #7880a0;
-  --t3:       #3d4460;
-  --t4:       #252d42;
-  --blue:     #4f8ef7;
-  --b2:       #2563eb;
-  --bdim:     rgba(79,142,247,0.12);
-  --bglow:    0 0 28px rgba(79,142,247,0.3);
-  --green:    #2dd48e;
-  --gdim:     rgba(45,212,142,0.1);
-  --amber:    #f5a720;
-  --adim:     rgba(245,167,32,0.1);
-  --red:      #f06464;
-  --rdim:     rgba(240,100,100,0.1);
-  --purple:   #9d7ef5;
-  --pdim:     rgba(157,126,245,0.1);
-  --teal:     #2dd4bf;
-  --tdim:     rgba(45,212,191,0.1);
-  --r:        10px;
-  --r2:       14px;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
-  --ease:cubic-bezier(.4,0,.2,1);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--sans);
-  background:var(--bg);
-  color:var(--tx);
-  min-height:100vh;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  font-size:14px;
-}
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 80% 40% at 5% 0%,rgba(79,142,247,0.07) 0%,transparent 55%),
-    radial-gradient(ellipse 50% 50% at 95% 90%,rgba(45,212,142,0.05) 0%,transparent 55%);
-  pointer-events:none;z-index:0;
-}
-body::after{
-  content:'';position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
-  pointer-events:none;z-index:0;opacity:.6;
-}
-.app{max-width:800px;margin:0 auto;padding:16px 13px 80px;position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:18px;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35),0 12px 32px rgba(0,0,0,.2);animation:fadeUp .32s var(--ease) both;}
-.card:hover{border-color:var(--bdhi);}
-.card::before{content:'';position:absolute;top:0;left:24px;right:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.055),transparent);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-.card:nth-child(1){animation-delay:.03s}.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.09s}
-.card:nth-child(4){animation-delay:.12s}.card:nth-child(5){animation-delay:.15s}.card:nth-child(6){animation-delay:.18s}
-.card:nth-child(7){animation-delay:.21s}.card:nth-child(8){animation-delay:.24s}.card:nth-child(9){animation-delay:.27s}
-.slabel{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:2.2px;text-transform:uppercase;color:var(--t3);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.slabel::after{content:'';flex:1;height:1px;background:var(--bd);}
-header{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35);animation:fadeUp .25s var(--ease) both;}
-header::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--blue) 35%,var(--teal) 65%,transparent 100%);opacity:.4;}
-.logo{font-size:16px;font-weight:700;letter-spacing:-.4px;line-height:1;}
-.logo em{font-style:normal;color:var(--blue);}
-.logo-sub{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.5px;margin-top:3px;display:block;}
-.hdr-r{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
-.sbadge{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;border:1px solid var(--bd);background:var(--s2);font-family:var(--mono);font-size:10px;font-weight:500;color:var(--t2);transition:all .3s var(--ease);}
-.sbadge.on{border-color:rgba(45,212,142,.4);background:var(--gdim);color:var(--green);}
-.sbadge.off{border-color:rgba(240,100,100,.35);background:var(--rdim);color:var(--red);}
-.sdot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;position:relative;}
-.sbadge.on .sdot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid var(--green);animation:ping 1.8s ease-out infinite;}
-@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.4);opacity:0}}
-.cdwn{font-family:var(--mono);font-size:9.5px;color:var(--teal);background:var(--tdim);border:1px solid rgba(45,212,191,.2);border-radius:6px;padding:3px 8px;min-width:54px;text-align:center;}
-.sync-clock{font-family:var(--mono);font-size:10px;color:var(--t3);}
-.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
-@media(max-width:520px){.mgrid{grid-template-columns:repeat(2,1fr);}}
-.mt{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:13px 11px;position:relative;overflow:hidden;transition:all .2s var(--ease);}
-.mt:hover{border-color:var(--bdhi);background:var(--s3);transform:translateY(-1px);}
-.mt::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s;}
-.mt:hover::after{opacity:1;}
-.mt.cb::after{background:var(--blue);}.mt.cg::after{background:var(--green);}.mt.ca::after{background:var(--amber);}
-.mt.cp::after{background:var(--purple);}.mt.ct::after{background:var(--teal);}
-.mv{font-family:var(--mono);font-size:19px;font-weight:500;line-height:1;margin-bottom:5px;letter-spacing:-.5px;}
-.mv.cb{color:var(--blue);}.mv.cg{color:var(--green);}.mv.ca{color:var(--amber);}.mv.cp{color:var(--purple);}.mv.ct{color:var(--teal);}
-.mn{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
-@keyframes shim{0%{opacity:.2}50%{opacity:.45}100%{opacity:.2}}
-.loading{animation:shim 1.6s ease-in-out infinite;}
-.ai-box{background:var(--s2);border:1px solid rgba(79,142,247,.22);border-radius:var(--r);padding:15px;position:relative;overflow:hidden;}
-.ai-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(79,142,247,.5),transparent);}
-.ai-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
-.ai-title{font-family:var(--mono);font-size:9.5px;font-weight:500;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:7px;}
-.ai-pulse{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px rgba(79,142,247,.7);animation:aip 2s ease-in-out infinite;}
-@keyframes aip{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
-.ptag{font-family:var(--mono);font-size:8.5px;padding:3px 9px;border-radius:10px;border:1px solid var(--bd);background:var(--s1);color:var(--t2);letter-spacing:1px;text-transform:uppercase;transition:all .3s;}
-.ptag.economy{color:var(--green);border-color:rgba(45,212,142,.35);background:var(--gdim);}
-.ptag.comfort{color:var(--amber);border-color:rgba(245,167,32,.35);background:var(--adim);}
-.ptag.balanced{color:var(--blue);border-color:rgba(79,142,247,.35);background:var(--bdim);}
-.ai-body{font-size:13px;color:var(--tx);line-height:1.65;margin-bottom:9px;}
-.ai-tip{font-family:var(--mono);font-size:10.5px;color:var(--teal);padding:8px 11px;background:var(--tdim);border:1px solid rgba(45,212,191,.2);border-radius:7px;line-height:1.5;margin-bottom:7px;}
-.ai-meta{display:flex;gap:12px;flex-wrap:wrap;}
-.ai-stat{font-family:var(--mono);font-size:10px;color:var(--t3);}
-.ai-stat span{color:var(--t2);}
-.ai-empty{text-align:center;padding:16px;font-family:var(--mono);font-size:9.5px;color:var(--t4);letter-spacing:1px;}
-.cost-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px;}
-.ig{display:flex;flex-direction:column;gap:4px;}
-.il{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
-.ctiles{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px;}
-@media(max-width:460px){.ctiles{grid-template-columns:repeat(2,1fr);}}
-.ct2{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 9px;text-align:center;transition:all .2s;}
-.ct2:hover{border-color:rgba(245,167,32,.3);background:var(--adim);}
-.ca{font-family:var(--mono);font-size:16px;font-weight:500;color:var(--amber);letter-spacing:-.3px;}
-.cp2{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:3px;}
-.cw{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;}
-.ci{position:relative;height:185px;padding:12px;}
-.ci.tall{height:225px;}
-.hhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.ctrl{display:flex;align-items:center;justify-content:space-between;gap:14px;}
-.stepper{display:flex;align-items:center;gap:3px;}
-.sbt{width:42px;height:42px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);color:var(--t2);font-size:22px;font-family:var(--mono);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s var(--ease);flex-shrink:0;}
-.sbt:hover{background:var(--bdim);border-color:rgba(79,142,247,.4);color:var(--blue);transform:scale(1.05);}
-.sbt:active{transform:scale(.9);}
-.tdisp{padding:0 16px;text-align:center;}
-.tbig{font-family:var(--mono);font-size:68px;font-weight:500;line-height:1;letter-spacing:-4px;color:var(--blue);text-shadow:0 0 50px rgba(79,142,247,.3);}
-.tsym{font-size:26px;font-weight:300;letter-spacing:0;color:var(--t3);}
-.tcap{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-top:5px;}
-.pwrap{display:flex;flex-direction:column;align-items:center;gap:7px;}
-.pbt{width:78px;height:78px;border-radius:50%;background:var(--s2);border:2px solid var(--bd);cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all .25s var(--ease);}
-.pbt::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid transparent;transition:all .3s;}
-.pbt.on{border-color:rgba(45,212,142,.5);background:var(--gdim);box-shadow:0 0 28px rgba(45,212,142,.18);}
-.pbt.on::before{border-color:rgba(45,212,142,.2);}
-.pbt.off{border-color:rgba(240,100,100,.4);background:var(--rdim);}
-.pbt.off::before{border-color:rgba(240,100,100,.15);}
-.pbt:hover{transform:scale(1.06);}
-.pbt:active{transform:scale(.95);}
-.picon{font-size:26px;line-height:1;}
-.plbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:2px;}
-.pbt.on .plbl{color:var(--green);}.pbt.off .plbl{color:var(--red);}
-.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
-@media(max-width:480px){.sgrid{grid-template-columns:1fr 1fr;}}
-.sg{display:flex;flex-direction:column;gap:4px;}
-.sl{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;}
-input[type=number],input[type=time],select{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:8px 10px;font-family:var(--sans);font-size:13px;color:var(--tx);transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;width:100%;}
-input[type=number]:focus,input[type=time]:focus,select:focus{outline:none;border-color:rgba(79,142,247,.5);box-shadow:0 0 0 3px rgba(79,142,247,.08);}
-select{appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5' stroke='%233d4460' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;}
-select option{background:var(--s2);color:var(--tx);}
-input[type=number]{width:auto;}
-.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;}
-.tt{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);cursor:pointer;transition:all .18s var(--ease);user-select:none;}
-.tt:hover{border-color:var(--bdhi);background:var(--s3);}
-.tt.on{border-color:rgba(79,142,247,.35);background:linear-gradient(135deg,rgba(79,142,247,.08) 0%,var(--s2) 100%);}
-.tname{font-size:13px;font-weight:600;color:var(--tx);}
-.tdesc{font-family:var(--mono);font-size:8.5px;color:var(--t3);margin-top:2px;}
-.tsw{width:35px;height:19px;border-radius:9.5px;background:var(--s3);border:1px solid var(--bd);position:relative;flex-shrink:0;transition:all .22s;}
-.tt.on .tsw{background:var(--blue);border-color:var(--blue);box-shadow:0 0 10px rgba(79,142,247,.35);}
-.tsw::after{content:'';position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--t3);transition:transform .22s cubic-bezier(.34,1.56,.64,1),background .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
-.tt.on .tsw::after{transform:translateX(16px);background:#fff;}
-.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
-@media(max-width:440px){.pgrid{grid-template-columns:repeat(3,1fr);}}
-.pbt2{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--sans);transition:all .15s var(--ease);}
-.pbt2:hover{border-color:rgba(79,142,247,.35);background:var(--bdim);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
-.pbt2:active{transform:scale(.94) translateY(0);}
-.pe{font-size:22px;line-height:1;}
-.pn{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;}
-.tgr{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-@media(max-width:420px){.tgr{grid-template-columns:1fr;}}
-.tbox{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:13px;}
-.ttl{font-family:var(--mono);font-size:8.5px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px;}
-.tr{display:flex;gap:5px;align-items:center;}
-.tstat{margin-top:6px;font-family:var(--mono);font-size:9.5px;color:var(--amber);min-height:13px;}
-.tex{display:flex;gap:5px;margin-top:7px;}
-.aform{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-end;}
-.alist{margin-top:10px;display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;}
-.alist::-webkit-scrollbar{width:4px;}
-.alist::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px;}
-.aitem{background:var(--bg);border:1px solid var(--bd);border-radius:7px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between;transition:border-color .18s;}
-.aitem:hover{border-color:var(--bdhi);}
-.aitxt{font-family:var(--mono);font-size:10.5px;color:var(--t2);}
-.aitxt b{color:var(--tx);font-weight:500;}
-.adel{background:none;border:none;color:var(--t3);cursor:pointer;font-size:13px;padding:3px 7px;border-radius:5px;transition:all .15s;}
-.adel:hover{color:var(--red);background:var(--rdim);}
-.empty-st{text-align:center;padding:20px;font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:1px;}
-.btn{padding:9px 15px;border-radius:var(--r);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s var(--ease);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
-.btn:active{transform:scale(.93);}
-.bp{background:var(--blue);color:#fff;box-shadow:0 0 20px rgba(79,142,247,.2);}
-.bp:hover{background:var(--b2);box-shadow:0 0 28px rgba(79,142,247,.35);transform:translateY(-1px);}
-.bg2{background:var(--gdim);color:var(--green);border:1px solid rgba(45,212,142,.3);}
-.bg2:hover{background:rgba(45,212,142,.18);}
-.bv{background:var(--pdim);color:var(--purple);border:1px solid rgba(157,126,245,.3);}
-.bv:hover{background:rgba(157,126,245,.18);}
-.bgh{background:var(--s2);color:var(--t2);border:1px solid var(--bd);}
-.bgh:hover{border-color:var(--bdhi);color:var(--tx);}
-.bd2{background:var(--rdim);color:var(--red);border:1px solid rgba(240,100,100,.25);}
-.bd2:hover{background:rgba(240,100,100,.18);}
-.bsm{padding:6px 11px;font-size:12px;border-radius:7px;}
-.bxs{padding:4px 9px;font-size:11px;border-radius:6px;}
-.bbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
-.bbar-r{display:flex;align-items:center;gap:7px;margin-left:auto;}
-.rlbl{font-family:var(--mono);font-size:9.5px;color:var(--t3);}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--s1);border:1px solid var(--bdhi);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:500;box-shadow:0 8px 40px rgba(0,0,0,.65);transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:9999;white-space:nowrap;}
-#toast.show{transform:translateX(-50%) translateY(0);}
-#toast.ok{border-color:rgba(45,212,142,.4);color:var(--green);background:rgba(8,18,14,.97);}
-#toast.err{border-color:rgba(240,100,100,.4);color:var(--red);background:rgba(18,8,8,.97);}
-#toast.info{border-color:rgba(245,167,32,.4);color:var(--amber);background:rgba(18,14,6,.97);}
-#toast.ai{border-color:rgba(79,142,247,.4);color:var(--blue);background:rgba(6,10,18,.97);}
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--bdhi);border-radius:5px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WindFree Pro" />
+  <title>WindFree Pro</title>
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            app: {
+              bg: "#000000",
+              panel: "#101114",
+              panelSoft: "#17181c",
+              accent: "#22d3ee"
+            }
+          },
+          fontFamily: {
+            sans: ["Space Grotesk", "system-ui", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          boxShadow: {
+            panel: "0 24px 60px rgba(0,0,0,0.35)",
+            glow: "0 0 0 1px rgba(34,211,238,0.18), 0 20px 50px rgba(34,211,238,0.1)"
+          },
+          backgroundImage: {
+            shell: "radial-gradient(circle at top left, rgba(34,211,238,0.14), transparent 35%), radial-gradient(circle at bottom right, rgba(59,130,246,0.14), transparent 35%)"
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+
+  <style>
+    html, body, #root { height: 100%; }
+    body {
+      margin: 0;
+      background: #000;
+      color: #f8fafc;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none;
+    }
+    * { box-sizing: border-box; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+  </style>
 </head>
-<body>
-<div class="app">
-
-  <header>
-    <div>
-      <div class="logo">Wind<em>Free</em> Pro</div>
-      <span class="logo-sub">API REST · DeepSeek AI · SmartThings</span>
-    </div>
-    <div class="hdr-r">
-      <span class="cdwn" id="cdwn">⟳ --s</span>
-      <div class="sbadge off" id="badge"><div class="sdot"></div><span id="badge-txt">—</span></div>
-      <div class="sync-clock" id="sclock">—</div>
-    </div>
-  </header>
-
-  <div class="card">
-    <div class="slabel">Sensores em tempo real</div>
-    <div class="mgrid">
-      <div class="mt cb"><div class="mv cb loading" id="m-temp">--°C</div><div class="mn">Temp. Amb.</div></div>
-      <div class="mt cp"><div class="mv cp loading" id="m-umid">--%</div><div class="mn">Umidade</div></div>
-      <div class="mt ca"><div class="mv ca loading" id="m-watts">-- W</div><div class="mn">Potência</div></div>
-      <div class="mt ct"><div class="mv ct loading" id="m-kwh">-- kWh</div><div class="mn">Total kWh</div></div>
-      <div class="mt"><div class="mv loading" id="m-fan">--</div><div class="mn">Ventilador</div></div>
-      <div class="mt"><div class="mv loading" id="m-oscil">--</div><div class="mn">Aletas</div></div>
-      <div class="mt cg"><div class="mv cg loading" id="m-eco">--</div><div class="mn">AI Saving</div></div>
-      <div class="mt"><div class="mv loading" id="m-opt">--</div><div class="mn">Modo Extra</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Insights da IA · DeepSeek</div>
-    <div class="ai-box">
-      <div class="ai-head">
-        <div class="ai-title"><div class="ai-pulse"></div>Análise de Perfil</div>
-        <span class="ptag balanced" id="ptag">balanced</span>
-      </div>
-      <div id="ai-content"><div class="ai-empty">Clique em "IA Economia" ou "Perfil IA" para analisar</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Calculadora de custo energético</div>
-    <div class="cost-row">
-      <div class="ig"><div class="il">Tarifa R$/kWh</div>
-        <input type="number" id="kwh-rate" value="1.15" min="0.01" step="0.01" style="width:96px" oninput="savePref('r',this.value);recalcCost()">
-      </div>
-      <div class="ig"><div class="il">Uso diário (h)</div>
-        <input type="number" id="daily-h" value="10" min="1" max="24" step="0.5" style="width:76px" oninput="savePref('h',this.value);recalcCost()">
-      </div>
-    </div>
-    <div class="ctiles">
-      <div class="ct2"><div class="ca" id="c-hora">--</div><div class="cp2">Por hora</div></div>
-      <div class="ct2"><div class="ca" id="c-dia">--</div><div class="cp2">Por dia</div></div>
-      <div class="ct2"><div class="ca" id="c-semana">--</div><div class="cp2">Por semana</div></div>
-      <div class="ct2"><div class="ca" id="c-mes">--</div><div class="cp2">Por mês</div></div>
-    </div>
-    <div class="cw"><div class="ci"><canvas id="costChart"></canvas></div></div>
-  </div>
-
-  <div class="card">
-    <div class="hhead">
-      <div class="slabel" style="margin:0;flex:1">Histórico de telemetria</div>
-      <div style="display:flex;gap:4px">
-        <button class="btn bgh bxs" onclick="loadHistory()">Recarregar Gráfico</button>
-      </div>
-    </div>
-    <div class="cw" style="margin-top:9px"><div class="ci tall"><canvas id="histChart"></canvas></div></div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Temperatura & energia</div>
-    <div class="ctrl">
-      <div class="stepper">
-        <button class="sbt" onclick="adjustTemp(-1)">−</button>
-        <div class="tdisp">
-          <div class="tbig" id="temp-disp">23<span class="tsym">°</span></div>
-          <div class="tcap">Setpoint ºC</div>
-        </div>
-        <button class="sbt" onclick="adjustTemp(+1)">+</button>
-      </div>
-      <div class="pwrap">
-        <button class="pbt off" id="pbt" onclick="togglePower()">
-          <span class="picon">⏻</span>
-          <span class="plbl" id="ptxt">--</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Operação</div>
-    <div class="sgrid">
-      <div class="sg"><div class="sl">Modo</div>
-        <select id="sel-modo" onchange="apiCall('setMode', this.value, 'Modo alterado ✓')">
-          <option value="cool">❄️ Refrigeração</option>
-          <option value="heat">🔥 Aquecimento</option>
-          <option value="auto">⚙️ Automático</option>
-          <option value="dry">💧 Desumidificar</option>
-          <option value="fan">🌀 Ventilação</option>
-        </select>
-      </div>
-      <div class="sg"><div class="sl">Velocidade</div>
-        <select id="sel-fan" onchange="apiCall('setFan', this.value, 'Ventilador alterado ✓')">
-          <option value="auto">Auto</option>
-          <option value="low">Baixa</option>
-          <option value="medium">Média</option>
-          <option value="high">Alta</option>
-          <option value="turbo">Turbo</option>
-        </select>
-      </div>
-      <div class="sg"><div class="sl">Aletas</div>
-        <select id="sel-oscil" onchange="apiCall('setOscil', this.value, 'Aletas alteradas ✓')">
-          <option value="auto">Auto</option>
-          <option value="swing">Swing</option>
-          <option value="up">Cima</option>
-          <option value="middle">Centro</option>
-          <option value="down">Baixo</option>
-          <option value="fixed">Fixo</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Modos especiais</div>
-    <div class="tgrid">
-      <div class="tt" id="tog-quiet"     onclick="toggleFeat('quiet')">     <div><div class="tname">Quiet</div><div class="tdesc">Modo silencioso</div></div><div class="tsw"></div></div>
-      <div class="tt" id="tog-windFree"  onclick="toggleFeat('windFree')">  <div><div class="tname">WindFree</div><div class="tdesc">Sem vento direto</div></div><div class="tsw"></div></div>
-      <div class="tt" id="tog-autoClean" onclick="toggleFeat('autoClean')"> <div><div class="tname">Auto Clean</div><div class="tdesc">Limpeza automática</div></div><div class="tsw"></div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Presets otimizados WindFree</div>
-    <div class="pgrid">
-      <button class="pbt2" onclick="applyPreset('sleep')"><span class="pe">🌙</span><span class="pn">Dormir</span></button>
-      <button class="pbt2" onclick="applyPreset('eco')">  <span class="pe">🌿</span><span class="pn">Eco</span></button>
-      <button class="pbt2" onclick="applyPreset('work')"> <span class="pe">💼</span><span class="pn">Trabalho</span></button>
-      <button class="pbt2" onclick="applyPreset('turbo')"><span class="pe">⚡</span><span class="pn">Turbo</span></button>
-      <button class="pbt2" onclick="applyPreset('away')"> <span class="pe">🚪</span><span class="pn">Saindo</span></button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Agendamento</div>
-    <div class="tgr">
-      <div class="tbox">
-        <div class="ttl">Desligamento automático</div>
-        <div class="tr">
-          <input type="number" id="off-min" min="1" max="1440" placeholder="min" style="width:72px">
-          <button class="btn bp bsm" onclick="setOffTimer()">Ativar</button>
-          <button class="btn bd2 bsm" onclick="apiCall('cancelOffTimer', null, 'Timer cancelado')">✕</button>
-        </div>
-        <div class="tstat" id="off-stat"></div>
-      </div>
-      <div class="tbox">
-        <div class="ttl">Ligamento agendado</div>
-        <div class="tr">
-          <input type="number" id="on-min" min="1" max="1440" placeholder="min" style="width:72px">
-          <button class="btn bp bsm" onclick="setOnTimer()">Ativar</button>
-        </div>
-        <div class="tex">
-          <select id="on-mode" style="flex:1"><option value="cool">Cool</option><option value="heat">Heat</option><option value="auto">Auto</option></select>
-          <input type="number" id="on-temp" min="16" max="30" value="23" style="width:54px">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="slabel">Automações por horário</div>
-    <div class="aform">
-      <div class="ig"><div class="il">Hora</div><input type="time" id="auto-hora" style="width:110px"></div>
-      <div class="ig"><div class="il">Ação</div>
-        <select id="auto-acao" style="width:112px">
-          <option value="ligar">Ligar</option>
-          <option value="desligar">Desligar</option>
-          <option value="preset">Preset</option>
-        </select>
-      </div>
-      <div class="ig"><div class="il">Modo</div>
-        <select id="auto-modo" style="width:138px">
-          <option value="cool">Cool</option><option value="heat">Heat</option>
-          <option value="auto">Auto</option><option value="sleep">Preset Dormir</option>
-          <option value="eco">Preset Eco</option><option value="work">Preset Trabalho</option>
-        </select>
-      </div>
-      <div class="ig"><div class="il">°C</div><input type="number" id="auto-temp" min="16" max="30" value="23" style="width:60px"></div>
-      <div class="ig"><div class="il" style="opacity:0">_</div><button class="btn bp bsm" onclick="addAuto()">+ Adicionar</button></div>
-    </div>
-    <div class="alist" id="alist"><div class="empty-st">Nenhuma automação cadastrada</div></div>
-  </div>
-
-  <div class="bbar">
-    <button class="btn bp"  onclick="syncNow()">↻ Sincronizar</button>
-    <button class="btn bg2" onclick="reqOpt()">✦ IA Economia</button>
-    <button class="btn bv"  onclick="reqProfile()">◈ Perfil IA</button>
-    <div class="bbar-r">
-      <span class="rlbl">Auto-sync</span>
-      <select id="ref-sel" onchange="changeRefresh()" style="width:118px">
-        <option value="30">30 segundos</option>
-        <option value="60" selected>1 minuto</option>
-        <option value="120">2 minutos</option>
-        <option value="300">5 minutos</option>
-      </select>
-    </div>
-  </div>
-
-</div>
-<div id="toast"></div>
-
-<script>
-// ════════════════════════════════════════════════════════════
-//  WINDFREE PRO — Frontend JavaScript
-//  Comunicação com Google Apps Script via fetch + no-cors workaround
-// ════════════════════════════════════════════════════════════
-
-// ⚠️ COLOQUE AQUI A URL DO SEU WEB APP (Apps Script → Implantar → Gerenciar implantações)
-const API_URL = 'https://script.google.com/macros/s/AKfycbzhLRwOcuHEBYMatY-aqfaxqvwJ-fXO36YHzXNSfhNQsE_mBJDLaZ2MZtjzFe8SJey1Qg/exec';
-
-// ════════════════════════════════════════════════════════════
-//  ESTADO GLOBAL
-// ════════════════════════════════════════════════════════════
-let state = {
+<body class="bg-app-bg bg-shell">
+  <div id="root"></div>
+  <script type="text/babel">
+const { useCallback, useEffect, useMemo, useRef, useState } = React;
+const motionLib = window.Motion || window["framer-motion"] || { motion: new Proxy({}, { get: () => "div" }), AnimatePresence: ({ children }) => children };
+const { motion, AnimatePresence } = motionLib;
+const DEFAULT_API_URL = "COLE_AQUI_SUA_URL_DO_WEB_APP";
+const NAV_ITEMS = [
+  { id: "overview", label: "Visao geral", subtitle: "Telemetria e status" },
+  { id: "control", label: "Operacao", subtitle: "Comandos rapidos" },
+  { id: "energy", label: "Energia", subtitle: "Custo e historico" },
+  { id: "automation", label: "Automacoes", subtitle: "Rotinas e timers" },
+  { id: "ai", label: "IA", subtitle: "Otimizacao inteligente" },
+  { id: "settings", label: "Configuracoes", subtitle: "Backend e seguranca" }
+];
+const INITIAL_DEVICE = {
   power: false,
   tempAlvo: 23,
-  modo: 'cool',
-  fanSpeed: 'auto',
-  fanOscil: 'auto',
+  modo: "cool",
+  fanSpeed: "auto",
+  fanOscil: "auto",
   economia: false,
-  modoOpcional: '--',
-  autoClean: '--',
+  modoOpcional: "--",
+  autoClean: "--",
   potencia: 0,
   energia: 0,
   temperatura: 0,
   umidade: null
 };
+const PRESETS = [
+  { id: "eco", label: "Eco noite" },
+  { id: "comfort", label: "Conforto" },
+  { id: "turbo", label: "Turbo" }
+];
 
-let refreshInterval = 60; // 1 minuto quando página está visível
-let backgroundInterval = 600; // 10 minutos quando página está em segundo plano
-let refreshTimer    = null;
-let countdown       = 60;
-let countdownTimer  = null;
-let costChart       = null;
-let histChart       = null;
-let timerPoller     = null;
+function cn(...values) {
+  return values.filter(Boolean).join(" ");
+}
 
-// ════════════════════════════════════════════════════════════
-//  COMUNICAÇÃO COM A API (CORS-safe via fetch + mode: 'cors')
-//  O Apps Script precisa estar publicado como "Qualquer pessoa"
-// ════════════════════════════════════════════════════════════
+function formatCurrency(value) {
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value || 0);
+}
 
-async function apiCall(action, value, onSuccess) {
-  try {
-    const body = { action };
-    if (value !== null && value !== undefined) body.value = value;
+function formatTime(date = new Date()) {
+  return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+}
 
-    const res  = await fetch(API_URL, {
-      method:  'POST',
-      // Apps Script aceita CORS quando publicado como "Qualquer pessoa, mesmo anônimo"
-      // Não envie headers extras desnecessários para evitar preflight bloqueado
-      body: JSON.stringify(body)
-    });
+function useToast() {
+  const [toast, setToast] = useState(null);
+  const showToast = useCallback((message, tone = "info") => {
+    setToast({ id: Date.now(), message, tone });
+  }, []);
 
-    const json = await res.json();
+  useEffect(() => {
+    if (!toast) return undefined;
+    const timer = window.setTimeout(() => setToast(null), 2800);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
 
-    if (!json.success) {
-      showToast('Erro: ' + (json.error || 'Falha na API'), 'err');
+  return { toast, showToast };
+}
+
+function StatCard({ label, value, hint, accent = false }) {
+  return (
+    <div className={cn("rounded-3xl border p-4 sm:p-5 shadow-panel", accent ? "border-cyan-400/20 bg-cyan-400/10" : "border-white/10 bg-white/5")}>
+      <p className="text-[11px] uppercase tracking-[0.28em] text-slate-400">{label}</p>
+      <p className="mt-3 text-2xl font-bold text-white sm:text-3xl">{value}</p>
+      {hint ? <p className="mt-2 text-sm text-slate-400">{hint}</p> : null}
+    </div>
+  );
+}
+
+function ActionButton({ children, onClick, variant = "primary", disabled = false, full = false }) {
+  const variants = {
+    primary: "bg-cyan-400 text-black shadow-glow",
+    secondary: "bg-white/8 text-white border border-white/10",
+    ghost: "bg-transparent text-slate-300 border border-white/10"
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={cn("min-h-[52px] rounded-2xl px-4 text-sm font-semibold transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50", variants[variant], full && "w-full")}
+    >
+      {children}
+    </button>
+  );
+}
+
+function RangeTemp({ value, onDecrease, onIncrease }) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Temperatura alvo</p>
+          <p className="mt-3 text-4xl font-bold text-white">{value}°</p>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={onDecrease} className="h-14 w-14 rounded-2xl border border-white/10 bg-white/8 text-2xl text-white">-</button>
+          <button onClick={onIncrease} className="h-14 w-14 rounded-2xl bg-cyan-400 text-2xl font-bold text-black shadow-glow">+</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChartCard({ title, subtitle, chartType, chartData, options }) {
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (!canvasRef.current || !chartData) return undefined;
+    const context = canvasRef.current.getContext("2d");
+    if (chartRef.current) chartRef.current.destroy();
+
+    chartRef.current = new Chart(context, { type: chartType, data: chartData, options });
+
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
+  }, [chartData, chartType, options]);
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-panel">
+      <div className="mb-4">
+        <p className="text-lg font-semibold text-white">{title}</p>
+        <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
+      </div>
+      <div className="h-64"><canvas ref={canvasRef}></canvas></div>
+    </div>
+  );
+}
+
+function Modal({ open, title, subtitle, onClose, children }) {
+  return (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-end bg-black/70 p-4 backdrop-blur md:items-center md:justify-center"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ y: 32, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 24, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 280, damping: 28 }}
+            className="w-full max-w-lg rounded-[28px] border border-white/10 bg-[#09090b] p-6 shadow-panel"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-semibold text-white">{title}</h3>
+                {subtitle ? <p className="mt-2 text-sm text-slate-400">{subtitle}</p> : null}
+              </div>
+              <button onClick={onClose} className="h-10 w-10 rounded-2xl border border-white/10 bg-white/5 text-white">x</button>
+            </div>
+            <div className="mt-5">{children}</div>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
+function App() {
+  const [activeView, setActiveView] = useState("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [device, setDevice] = useState(INITIAL_DEVICE);
+  const [apiUrl, setApiUrl] = useState(localStorage.getItem("wfp_api_url") || DEFAULT_API_URL);
+  const [refreshInterval] = useState(60);
+  const [backgroundInterval] = useState(600);
+  const [countdown, setCountdown] = useState(60);
+  const [syncing, setSyncing] = useState(false);
+  const [historyData, setHistoryData] = useState(null);
+  const [automations, setAutomations] = useState([]);
+  const [aiProfile, setAiProfile] = useState("balanced");
+  const [aiContent, setAiContent] = useState(null);
+  const [aiModal, setAiModal] = useState({ open: false, title: "", subtitle: "", loading: false });
+  const [configStatus, setConfigStatus] = useState(null);
+  const [clock, setClock] = useState(formatTime());
+  const [rates, setRates] = useState({
+    kwhRate: Number(localStorage.getItem("wfp_r") || 1.15),
+    dailyHours: Number(localStorage.getItem("wfp_h") || 10)
+  });
+  const [forms, setForms] = useState({
+    offMinutes: "45",
+    onMinutes: "30",
+    onMode: "cool",
+    onTemp: "23",
+    autoHora: "",
+    autoAcao: "ligar",
+    autoModo: "cool",
+    autoTemp: "23",
+    smartthingsToken: "",
+    smartthingsDeviceId: "",
+    deepseekApiKey: "",
+    adminPin: "",
+    newAdminPin: "",
+    timerStatus: "Sem timer ativo"
+  });
+  const { toast, showToast } = useToast();
+  const timerRef = useRef(null);
+  const countdownRef = useRef(null);
+  const timerPollerRef = useRef(null);
+  const tempDebounceRef = useRef(null);
+  const syncCounterRef = useRef(0);
+
+  const viewMeta = useMemo(() => NAV_ITEMS.find((item) => item.id === activeView) || NAV_ITEMS[0], [activeView]);
+
+  const costs = useMemo(() => {
+    const watts = Number(device.potencia) || 0;
+    const kw = watts / 1000;
+    const hour = kw * (Number(rates.kwhRate) || 0);
+    const day = hour * (Number(rates.dailyHours) || 0);
+    return { hour, day, week: day * 7, month: day * 30 };
+  }, [device.potencia, rates]);
+
+  const costChartData = useMemo(() => ({
+    labels: ["Hora", "Dia", "Semana", "Mes"],
+    datasets: [{
+      data: [costs.hour, costs.day, costs.week, costs.month],
+      backgroundColor: [
+        "rgba(34, 211, 238, 0.25)",
+        "rgba(34, 211, 238, 0.4)",
+        "rgba(34, 211, 238, 0.58)",
+        "rgba(34, 211, 238, 0.85)"
+      ],
+      borderRadius: 18,
+      borderSkipped: false
+    }]
+  }), [costs]);
+
+  const historyChartData = useMemo(() => {
+    if (!historyData?.labels) return { labels: [], datasets: [] };
+    return {
+      labels: historyData.labels,
+      datasets: [
+        {
+          label: "Potencia (W)",
+          data: historyData.watts,
+          borderColor: "#22d3ee",
+          backgroundColor: "rgba(34, 211, 238, 0.14)",
+          borderWidth: 2.5,
+          fill: true,
+          pointRadius: 0,
+          tension: 0.35,
+          yAxisID: "y"
+        },
+        {
+          label: "Temperatura (C)",
+          data: historyData.temps,
+          borderColor: "#60a5fa",
+          borderWidth: 2,
+          fill: false,
+          pointRadius: 0,
+          tension: 0.35,
+          yAxisID: "y1"
+        }
+      ]
+    };
+  }, [historyData]);
+
+  const historyOptions = useMemo(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: "index", intersect: false },
+    plugins: { legend: { labels: { color: "#cbd5e1", font: { family: "Space Grotesk" } } } },
+    scales: {
+      x: { ticks: { color: "#64748b", font: { family: "JetBrains Mono" } }, grid: { color: "rgba(255,255,255,0.05)" } },
+      y: { type: "linear", display: true, position: "left", ticks: { color: "#22d3ee", font: { family: "JetBrains Mono" } }, grid: { color: "rgba(255,255,255,0.05)" }, beginAtZero: true },
+      y1: { type: "linear", display: true, position: "right", ticks: { color: "#60a5fa", font: { family: "JetBrains Mono" } }, grid: { display: false } }
+    }
+  }), []);
+
+  const costOptions = useMemo(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: "#94a3b8", font: { family: "JetBrains Mono" } }, grid: { display: false } },
+      y: { ticks: { color: "#94a3b8", font: { family: "JetBrains Mono" }, callback: (value) => `R$ ${Number(value).toFixed(2)}` }, grid: { color: "rgba(255,255,255,0.05)" } }
+    }
+  }), []);
+
+  const apiRequest = useCallback(async (action, payload = {}, successMessage = null) => {
+    const url = apiUrl.trim();
+    if (!url || url === DEFAULT_API_URL) {
+      showToast("Configure a URL do backend primeiro", "error");
       return null;
     }
 
-    if (typeof onSuccess === 'string' && onSuccess !== 'loadHistory') {
-      showToast(onSuccess, 'ok');
+    try {
+      const response = await fetch(url, { method: "POST", body: JSON.stringify({ action, ...payload }) });
+      const json = await response.json();
+      if (!json.success) {
+        showToast(`Erro: ${json.error || "Falha na API"}`, "error");
+        return null;
+      }
+      if (successMessage) showToast(successMessage, "success");
+      return json.data;
+    } catch (error) {
+      console.error(error);
+      showToast("Sem conexao com a API", "error");
+      return null;
+    }
+  }, [apiUrl, showToast]);
+
+  const resetCountdown = useCallback((interval = refreshInterval) => {
+    setCountdown(interval);
+    if (countdownRef.current) window.clearInterval(countdownRef.current);
+    countdownRef.current = window.setInterval(() => {
+      setCountdown((prev) => (prev <= 1 ? interval : prev - 1));
+    }, 1000);
+  }, [refreshInterval]);
+
+  const syncNow = useCallback(async ({ silent = false } = {}) => {
+    if (!silent) setSyncing(true);
+    const data = await apiRequest("sync");
+    if (!data) {
+      if (!silent) setSyncing(false);
+      return;
     }
 
-    if (onSuccess === 'loadHistory') loadHistory();
+    setDevice((prev) => ({ ...prev, ...data }));
+    setClock(formatTime());
+    syncCounterRef.current += 1;
+    if (syncCounterRef.current % 5 === 1) {
+      const hist = await apiRequest("getHistory", { n: 48 });
+      if (hist?.labels) setHistoryData(hist);
+    }
+    resetCountdown();
+    if (!silent) {
+      setSyncing(false);
+      showToast("Sincronizacao concluida", "success");
+    }
+  }, [apiRequest, resetCountdown, showToast]);
 
-    return json.data;
+  const loadHistory = useCallback(async () => {
+    const data = await apiRequest("getHistory", { n: 48 });
+    if (data?.labels) setHistoryData(data);
+  }, [apiRequest]);
 
-  } catch(e) {
-    showToast('Sem conexão com a API', 'err');
-    console.error(e);
-    return null;
-  }
-}
+  const loadAutomations = useCallback(async () => {
+    const data = await apiRequest("getAutos");
+    setAutomations(Array.isArray(data) ? data : []);
+  }, [apiRequest]);
 
-// ════════════════════════════════════════════════════════════
-//  SYNC PRINCIPAL
-// ════════════════════════════════════════════════════════════
+  const loadConfigStatus = useCallback(async () => {
+    const data = await apiRequest("getConfigStatus");
+    if (data) setConfigStatus(data);
+  }, [apiRequest]);
 
-async function syncNow() {
-  const data = await apiCall('sync', null, null);
-  if (!data) return;
+  const updateTimerStatus = useCallback(async () => {
+    const data = await apiRequest("getTimerStatus");
+    if (!data) return;
+    setForms((prev) => ({ ...prev, timerStatus: data.active ? `Desliga em ${data.remaining} min` : "Sem timer ativo" }));
+  }, [apiRequest]);
 
-  state = { ...state, ...data };
-  updateUI(data);
-  
-  // --- ADICIONE ESTA LINHA ABAIXO ---
-  loadHistory(); 
-  // ----------------------------------
+  const resetAutoSync = useCallback(() => {
+    if (timerRef.current) window.clearInterval(timerRef.current);
+    const interval = document.hidden ? backgroundInterval : refreshInterval;
+    timerRef.current = window.setInterval(() => syncNow({ silent: true }), interval * 1000);
+    resetCountdown(interval);
+  }, [backgroundInterval, refreshInterval, resetCountdown, syncNow]);
 
-  resetCountdown();
+  useEffect(() => {
+    localStorage.setItem("wfp_r", rates.kwhRate);
+    localStorage.setItem("wfp_h", rates.dailyHours);
+  }, [rates]);
 
-  document.getElementById('sclock').textContent =
-    new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
+  useEffect(() => {
+    localStorage.setItem("wfp_api_url", apiUrl);
+  }, [apiUrl]);
 
-function updateUI(d) {
-  // Badge de status
-  const badge = document.getElementById('badge');
-  const bdTxt = document.getElementById('badge-txt');
-  badge.className = 'sbadge ' + (d.power ? 'on' : 'off');
-  bdTxt.textContent = d.power ? 'Ligado' : 'Desligado';
+  useEffect(() => {
+    const visibilityHandler = () => resetAutoSync();
+    document.addEventListener("visibilitychange", visibilityHandler);
+    syncNow({ silent: true });
+    loadHistory();
+    loadAutomations();
+    loadConfigStatus();
+    updateTimerStatus();
+    resetAutoSync();
+    timerPollerRef.current = window.setInterval(updateTimerStatus, 15000);
+    const clockTimer = window.setInterval(() => setClock(formatTime()), 30000);
 
-  // Botão de power
-  const pbt  = document.getElementById('pbt');
-  const ptxt = document.getElementById('ptxt');
-  pbt.className = 'pbt ' + (d.power ? 'on' : 'off');
-  ptxt.textContent = d.power ? 'ON' : 'OFF';
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(() => null);
+    }
 
-  // Métricas
-  setMetric('m-temp',  d.temperatura !== undefined ? d.temperatura + '°C' : '--°C');
-  setMetric('m-umid',  d.umidade     !== null && d.umidade !== undefined ? d.umidade + '%' : '--%');
-  setMetric('m-watts', d.potencia    !== undefined ? d.potencia + ' W' : '-- W');
-  setMetric('m-kwh',   d.energia     !== undefined ? d.energia + ' kWh' : '-- kWh');
-  setMetric('m-fan',   d.fanSpeed    || '--');
-  setMetric('m-oscil', d.fanOscil    || '--');
-  setMetric('m-eco',   d.economia    ? 'ON' : 'OFF');
-  setMetric('m-opt',   d.modoOpcional || '--');
+    return () => {
+      document.removeEventListener("visibilitychange", visibilityHandler);
+      if (timerRef.current) window.clearInterval(timerRef.current);
+      if (countdownRef.current) window.clearInterval(countdownRef.current);
+      if (timerPollerRef.current) window.clearInterval(timerPollerRef.current);
+      if (clockTimer) window.clearInterval(clockTimer);
+      if (tempDebounceRef.current) window.clearTimeout(tempDebounceRef.current);
+    };
+  }, [loadAutomations, loadConfigStatus, loadHistory, resetAutoSync, syncNow, updateTimerStatus]);
 
-  // Temperatura setpoint
-  const tempVal = Number(d.tempAlvo) || state.tempAlvo;
-  state.tempAlvo = tempVal;
-  document.getElementById('temp-disp').innerHTML = tempVal + '<span class="tsym">°</span>';
-
-  // Selects
-  setSelectSafe('sel-modo',  d.modo);
-  setSelectSafe('sel-fan',   d.fanSpeed);
-  setSelectSafe('sel-oscil', d.fanOscil);
-
-  // Toggles de modos especiais
-  const opt = (d.modoOpcional || '').toLowerCase();
-  setToggle('tog-quiet',     opt === 'quiet');
-  setToggle('tog-windFree',  opt === 'windfree' || opt === 'wind_free');
-  setToggle('tog-autoClean', (d.autoClean || '').toLowerCase() === 'on');
-
-  // Recalcula custo com nova potência
-  recalcCost();
-}
-
-function setMetric(id, val) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = val;
-  el.classList.remove('loading');
-}
-
-function setSelectSafe(id, val) {
-  const el = document.getElementById(id);
-  if (!el || !val || val === '--') return;
-  for (let opt of el.options) {
-    if (opt.value === val) { el.value = val; return; }
-  }
-}
-
-function setToggle(id, on) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  on ? el.classList.add('on') : el.classList.remove('on');
-}
-
-// ════════════════════════════════════════════════════════════
-//  CONTROLES
-// ════════════════════════════════════════════════════════════
-
-async function togglePower() {
-  const next = !state.power;
-  state.power = next;
-  await apiCall('setPower', next ? 'on' : 'off', (next ? 'Ligando...' : 'Desligando...'));
-  setTimeout(syncNow, 2000);
-}
-
-let tempDebounce = null;
-function adjustTemp(delta) {
-  let t = state.tempAlvo + delta;
-  if (t < 16) t = 16;
-  if (t > 30) t = 30;
-  state.tempAlvo = t;
-  document.getElementById('temp-disp').innerHTML = t + '<span class="tsym">°</span>';
-  clearTimeout(tempDebounce);
-  tempDebounce = setTimeout(() => apiCall('setTemp', t, 'Temp: ' + t + '°C ✓'), 800);
-}
-
-async function toggleFeat(feat) {
-  const el = document.getElementById('tog-' + feat);
-  const isOn = el && el.classList.contains('on');
-  const next = !isOn;
-  const actions = {
-    quiet:     ['setQuiet',     next],
-    windFree:  ['setWindFree',  next],
-    autoClean: ['setAutoClean', next]
+  const navigate = (id) => {
+    setActiveView(id);
+    setSidebarOpen(false);
   };
-  const [action, val] = actions[feat] || [];
-  if (!action) return;
-  if (next) {
-    if (feat === 'quiet') setToggle('tog-windFree', false);
-    if (feat === 'windFree') setToggle('tog-quiet', false);
-  }
-  setToggle('tog-' + feat, next);
-  const result = await apiCall(action, val, feat + (next ? ' ON ✓' : ' OFF ✓'));
-  if (!result) {
-    setToggle('tog-' + feat, isOn);
-    if (feat === 'quiet' || feat === 'windFree') {
-      setTimeout(syncNow, 1500); 
+
+  const togglePower = async () => {
+    const next = !device.power;
+    setDevice((prev) => ({ ...prev, power: next }));
+    const data = await apiRequest("setPower", { value: next ? "on" : "off" }, next ? "Ligando..." : "Desligando...");
+    if (!data) {
+      setDevice((prev) => ({ ...prev, power: !next }));
+      return;
     }
-  }
-}
+    window.setTimeout(() => syncNow({ silent: true }), 1600);
+  };
 
-function applyPreset(preset) {
-  apiCall('applyPreset', preset, 'Preset "' + preset + '" ativado ✓')
-    .then(() => setTimeout(syncNow, 2500));
-}
+  const adjustTemp = (delta) => {
+    setDevice((prev) => {
+      const nextTemp = Math.max(16, Math.min(30, Number(prev.tempAlvo || 23) + delta));
+      if (tempDebounceRef.current) window.clearTimeout(tempDebounceRef.current);
+      tempDebounceRef.current = window.setTimeout(() => {
+        apiRequest("setTemp", { value: nextTemp }, "Temperatura ajustada");
+      }, 650);
+      return { ...prev, tempAlvo: nextTemp };
+    });
+  };
 
-// ════════════════════════════════════════════════════════════
-//  TIMERS
-// ════════════════════════════════════════════════════════════
+  const updateSetting = async (action, value, message) => {
+    const data = await apiRequest(action, { value }, message);
+    if (data !== null) window.setTimeout(() => syncNow({ silent: true }), 1200);
+  };
 
-function setOffTimer() {
-  const min = parseInt(document.getElementById('off-min').value);
-  if (!min || min < 1) return showToast('Informe os minutos', 'err');
-  apiCall('setOffTimer', null, null, { action: 'setOffTimer', minutes: min })
-    .then(d => { if (d) { showToast('Desligamento em ' + min + ' min ✓', 'ok'); startTimerPoller(); } });
-}
+  const toggleFeature = async (feature) => {
+    const current = {
+      quiet: String(device.modoOpcional || "").toLowerCase() === "quiet",
+      windFree: ["windfree", "wind_free"].includes(String(device.modoOpcional || "").toLowerCase()),
+      autoClean: String(device.autoClean || "").toLowerCase() === "on"
+    };
+    const next = !current[feature];
+    const actions = {
+      quiet: ["setQuiet", next],
+      windFree: ["setWindFree", next],
+      autoClean: ["setAutoClean", next]
+    };
+    await apiRequest(actions[feature][0], { value: actions[feature][1] }, `${feature} ${next ? "ativado" : "desativado"}`);
+    window.setTimeout(() => syncNow({ silent: true }), 1400);
+  };
 
-async function apiCallRaw(body, onSuccess) {
-  try {
-    const res  = await fetch(API_URL, { method: 'POST', body: JSON.stringify(body) });
-    const json = await res.json();
-    if (!json.success) { showToast('Erro: ' + (json.error || '?'), 'err'); return null; }
-    if (onSuccess) showToast(onSuccess, 'ok');
-    return json.data;
-  } catch(e) {
-    showToast('Sem conexão', 'err'); return null;
-  }
-}
+  const applyPreset = async (preset) => {
+    await apiRequest("applyPreset", { value: preset }, "Preset ativado");
+    window.setTimeout(() => syncNow({ silent: true }), 1800);
+  };
 
-// Override de setOffTimer para passar minutos corretamente
-async function setOffTimer() {
-  const min = parseInt(document.getElementById('off-min').value);
-  if (!min || min < 1) return showToast('Informe os minutos', 'err');
-  const data = await apiCallRaw({ action: 'setOffTimer', minutes: min }, 'Timer ativado: ' + min + ' min ✓');
-  if (data) startTimerPoller();
-}
+  const saveTimer = async (type) => {
+    if (type === "off") {
+      const minutes = parseInt(forms.offMinutes, 10);
+      if (!minutes || minutes < 1) return showToast("Informe os minutos do timer", "error");
+      const data = await apiRequest("setOffTimer", { minutes }, "Timer de desligamento salvo");
+      if (data) updateTimerStatus();
+      return;
+    }
 
-async function setOnTimer() {
-  const min  = parseInt(document.getElementById('on-min').value);
-  const mode = document.getElementById('on-mode').value;
-  const temp = parseInt(document.getElementById('on-temp').value);
-  if (!min || min < 1) return showToast('Informe os minutos', 'err');
-  await apiCallRaw({ action: 'setOnTimer', minutes: min, mode, temp }, 'Ligamento em ' + min + ' min ✓');
-}
+    const minutes = parseInt(forms.onMinutes, 10);
+    if (!minutes || minutes < 1) return showToast("Informe os minutos do ligamento", "error");
+    await apiRequest("setOnTimer", {
+      minutes,
+      mode: forms.onMode,
+      temp: parseInt(forms.onTemp, 10) || 23
+    }, "Ligamento programado");
+  };
 
-function startTimerPoller() {
-  if (timerPoller) clearInterval(timerPoller);
-  timerPoller = setInterval(updateTimerStatus, 15000);
-  updateTimerStatus();
-}
+  const addAutomation = async () => {
+    if (!forms.autoHora) return showToast("Informe a hora da automacao", "error");
+    const rule = {
+      hora: forms.autoHora,
+      acao: forms.autoAcao,
+      modo: forms.autoModo,
+      temp: parseInt(forms.autoTemp, 10) || 23,
+      ativo: true
+    };
+    const data = await apiRequest("addAuto", { rule }, "Automacao adicionada");
+    if (data !== null) {
+      setForms((prev) => ({ ...prev, autoHora: "" }));
+      loadAutomations();
+    }
+  };
 
-async function updateTimerStatus() {
-  const data = await apiCallRaw({ action: 'getTimerStatus' }, null);
-  const el   = document.getElementById('off-stat');
-  if (!el) return;
-  if (data && data.active) {
-    el.textContent = '⏱ Desliga em ' + data.remaining + ' min';
-  } else {
-    el.textContent = '';
-    if (timerPoller) { clearInterval(timerPoller); timerPoller = null; }
-  }
-}
+  const deleteAutomation = async (id) => {
+    const data = await apiRequest("delAuto", { id }, "Automacao removida");
+    if (data !== null) loadAutomations();
+  };
 
-// ════════════════════════════════════════════════════════════
-//  AUTOMAÇÕES
-// ════════════════════════════════════════════════════════════
+  const openAiModal = async (mode) => {
+    const title = mode === "economia" ? "IA Economia" : "Perfil IA";
+    const subtitle = mode === "economia"
+      ? "Analisando consumo e oportunidades de economia."
+      : "Montando seu perfil de uso para conforto e eficiencia.";
 
-async function loadAutomations() {
-  const data = await apiCallRaw({ action: 'getAutos' }, null);
-  renderAutomations(data || []);
-}
+    setAiModal({ open: true, title, subtitle, loading: true });
+    showToast(mode === "economia" ? "Consultando IA..." : "Analisando perfil...", "info");
+    const action = mode === "economia" ? "reqOptimization" : "reqProfile";
+    const data = await apiRequest(action);
+    if (!data) {
+      setAiModal((prev) => ({ ...prev, loading: false }));
+      return;
+    }
 
-function renderAutomations(rules) {
-  const el = document.getElementById('alist');
-  if (!rules.length) {
-    el.innerHTML = '<div class="empty-st">Nenhuma automação cadastrada</div>';
-    return;
-  }
-  el.innerHTML = rules.map(r => `
-    <div class="aitem">
-      <div class="aitxt"><b>${r.hora}</b> — ${r.acao} ${r.modo ? '· ' + r.modo : ''} ${r.temp ? r.temp+'°C' : ''}</div>
-      <button class="adel" onclick="delAuto('${r.id}')">✕</button>
+    setAiProfile(data.profile || "balanced");
+    setAiContent({ mode, data });
+    setAiModal((prev) => ({ ...prev, loading: false }));
+  };
+
+  const saveConfig = async () => {
+    const data = await apiRequest("saveConfig", {
+      smartthingsToken: forms.smartthingsToken,
+      smartthingsDeviceId: forms.smartthingsDeviceId,
+      deepseekApiKey: forms.deepseekApiKey,
+      adminPin: forms.adminPin,
+      newAdminPin: forms.newAdminPin
+    }, "Configuracoes salvas");
+
+    if (!data) return;
+    setConfigStatus(data.status);
+    setForms((prev) => ({
+      ...prev,
+      smartthingsToken: "",
+      deepseekApiKey: "",
+      adminPin: "",
+      newAdminPin: ""
+    }));
+  };
+
+  const clearApiKeys = async () => {
+    const data = await apiRequest("clearConfig", {
+      adminPin: forms.adminPin,
+      clearSmartthings: true,
+      clearDeepseek: true
+    }, "Chaves removidas");
+    if (data) setConfigStatus(data.status);
+  };
+
+  const renderView = () => {
+    switch (activeView) {
+      case "overview":
+        return (
+          <div className="space-y-5">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <StatCard label="Energia" value={`${device.energia ?? "--"} kWh`} hint="Total acumulado" accent />
+              <StatCard label="Temperatura" value={`${device.temperatura ?? "--"}°C`} hint="Ambiente monitorado" />
+              <StatCard label="Umidade" value={`${device.umidade ?? "--"}%`} hint="Leitura instantanea" />
+              <StatCard label="Potencia" value={`${device.potencia ?? "--"} W`} hint="Consumo em tempo real" />
+            </div>
+
+            <div className="grid gap-5 xl:grid-cols-[1.4fr,0.9fr]">
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-lg font-semibold text-white">Painel ao vivo</p>
+                    <p className="mt-1 text-sm text-slate-400">Visao central para o aparelho e a telemetria.</p>
+                  </div>
+                  <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 font-mono text-xs text-cyan-300">{countdown}s</span>
+                </div>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-3xl border border-white/10 bg-[#0c0c0f] p-5">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Perfil do aparelho</p>
+                    <div className="mt-4 space-y-3 text-sm text-slate-300">
+                      <div className="flex justify-between"><span>Modo</span><strong className="text-white">{device.modo || "--"}</strong></div>
+                      <div className="flex justify-between"><span>Ventilacao</span><strong className="text-white">{device.fanSpeed || "--"}</strong></div>
+                      <div className="flex justify-between"><span>Aletas</span><strong className="text-white">{device.fanOscil || "--"}</strong></div>
+                      <div className="flex justify-between"><span>Modo opcional</span><strong className="text-white">{device.modoOpcional || "--"}</strong></div>
+                      <div className="flex justify-between"><span>Economia</span><strong className="text-white">{device.economia ? "ON" : "OFF"}</strong></div>
+                    </div>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-[#0c0c0f] p-5">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Resumo de energia</p>
+                    <div className="mt-4 space-y-4">
+                      <div><p className="text-sm text-slate-400">Hora</p><p className="text-2xl font-bold text-white">{formatCurrency(costs.hour)}</p></div>
+                      <div><p className="text-sm text-slate-400">Dia</p><p className="text-2xl font-bold text-white">{formatCurrency(costs.day)}</p></div>
+                      <div><p className="text-sm text-slate-400">Mes</p><p className="text-2xl font-bold text-cyan-300">{formatCurrency(costs.month)}</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Acoes rapidas</p>
+                <p className="mt-1 text-sm text-slate-400">Tudo pensado para toque e uso rapido no celular.</p>
+                <div className="mt-5 grid gap-3">
+                  <ActionButton onClick={() => syncNow()} full>{syncing ? "Sincronizando..." : "Sincronizar agora"}</ActionButton>
+                  <ActionButton onClick={() => openAiModal("economia")} variant="secondary" full>IA Economia</ActionButton>
+                  <ActionButton onClick={() => openAiModal("perfil")} variant="secondary" full>Perfil IA</ActionButton>
+                  <ActionButton onClick={togglePower} variant="ghost" full>{device.power ? "Desligar aparelho" : "Ligar aparelho"}</ActionButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "control":
+        return (
+          <div className="grid gap-5 xl:grid-cols-[1.05fr,0.95fr]">
+            <div className="space-y-5">
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-lg font-semibold text-white">Controle principal</p>
+                    <p className="mt-1 text-sm text-slate-400">Ajustes centrais sem sair da tela.</p>
+                  </div>
+                  <button onClick={togglePower} className={cn("h-16 min-w-[124px] rounded-[22px] px-5 text-base font-bold transition", device.power ? "bg-cyan-400 text-black shadow-glow" : "border border-white/10 bg-white/8 text-white")}>{device.power ? "ON" : "OFF"}</button>
+                </div>
+                <div className="mt-5">
+                  <RangeTemp value={device.tempAlvo} onDecrease={() => adjustTemp(-1)} onIncrease={() => adjustTemp(1)} />
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Presets e recursos</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {PRESETS.map((preset) => (
+                    <ActionButton key={preset.id} variant="secondary" onClick={() => applyPreset(preset.id)} full>{preset.label}</ActionButton>
+                  ))}
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                  {[{ id: "quiet", label: "Quiet" }, { id: "windFree", label: "WindFree" }, { id: "autoClean", label: "Auto Clean" }].map((item) => (
+                    <button key={item.id} onClick={() => toggleFeature(item.id)} className="min-h-[56px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-sm font-semibold text-white">{item.label}</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Parametros do aparelho</p>
+                <div className="mt-5 grid gap-4">
+                  <label className="grid gap-2 text-sm text-slate-300">
+                    <span>Modo</span>
+                    <select value={device.modo || "cool"} onChange={(event) => { const value = event.target.value; setDevice((prev) => ({ ...prev, modo: value })); updateSetting("setMode", value, "Modo alterado"); }} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                      <option value="cool">cool</option>
+                      <option value="dry">dry</option>
+                      <option value="fanOnly">fanOnly</option>
+                      <option value="wind">wind</option>
+                      <option value="auto">auto</option>
+                    </select>
+                  </label>
+                  <label className="grid gap-2 text-sm text-slate-300">
+                    <span>Ventilacao</span>
+                    <select value={device.fanSpeed || "auto"} onChange={(event) => { const value = event.target.value; setDevice((prev) => ({ ...prev, fanSpeed: value })); updateSetting("setFan", value, "Ventilador alterado"); }} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                      <option value="auto">auto</option>
+                      <option value="low">low</option>
+                      <option value="medium">medium</option>
+                      <option value="high">high</option>
+                      <option value="turbo">turbo</option>
+                    </select>
+                  </label>
+                  <label className="grid gap-2 text-sm text-slate-300">
+                    <span>Aletas</span>
+                    <select value={device.fanOscil || "auto"} onChange={(event) => { const value = event.target.value; setDevice((prev) => ({ ...prev, fanOscil: value })); updateSetting("setOscil", value, "Aletas alteradas"); }} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                      <option value="auto">auto</option>
+                      <option value="swing">swing</option>
+                      <option value="fix1">fix1</option>
+                      <option value="fix2">fix2</option>
+                      <option value="fix3">fix3</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Indicadores do modo</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <StatCard label="Eco" value={device.economia ? "ON" : "OFF"} />
+                  <StatCard label="Timer" value={forms.timerStatus || "Sem timer ativo"} />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "energy":
+        return (
+          <div className="space-y-5">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <StatCard label="Por hora" value={formatCurrency(costs.hour)} />
+              <StatCard label="Por dia" value={formatCurrency(costs.day)} />
+              <StatCard label="Por semana" value={formatCurrency(costs.week)} />
+              <StatCard label="Por mes" value={formatCurrency(costs.month)} accent />
+            </div>
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <p className="text-lg font-semibold text-white">Parametros de calculo</p>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-2 text-sm text-slate-300">
+                  <span>Tarifa kWh</span>
+                  <input type="number" step="0.01" value={rates.kwhRate} onChange={(event) => setRates((prev) => ({ ...prev, kwhRate: Number(event.target.value || 0) }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" />
+                </label>
+                <label className="grid gap-2 text-sm text-slate-300">
+                  <span>Horas por dia</span>
+                  <input type="number" step="0.5" value={rates.dailyHours} onChange={(event) => setRates((prev) => ({ ...prev, dailyHours: Number(event.target.value || 0) }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" />
+                </label>
+              </div>
+            </div>
+            <div className="grid gap-5 xl:grid-cols-2">
+              <ChartCard title="Custo projetado" subtitle="Comparativo de hora, dia, semana e mes." chartType="bar" chartData={costChartData} options={costOptions} />
+              <ChartCard title="Historico recente" subtitle="Potencia e temperatura das ultimas leituras." chartType="line" chartData={historyChartData} options={historyOptions} />
+            </div>
+          </div>
+        );
+
+      case "automation":
+        return (
+          <div className="grid gap-5 xl:grid-cols-[1.05fr,0.95fr]">
+            <div className="space-y-5">
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Timers rapidos</p>
+                <div className="mt-4 grid gap-4">
+                  <div className="grid gap-3 sm:grid-cols-[1fr,auto]">
+                    <input type="number" min="1" value={forms.offMinutes} onChange={(event) => setForms((prev) => ({ ...prev, offMinutes: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Minutos para desligar" />
+                    <ActionButton onClick={() => saveTimer("off")} full>Desligar em X min</ActionButton>
+                  </div>
+                  <div className="grid gap-3">
+                    <input type="number" min="1" value={forms.onMinutes} onChange={(event) => setForms((prev) => ({ ...prev, onMinutes: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Minutos para ligar" />
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <select value={forms.onMode} onChange={(event) => setForms((prev) => ({ ...prev, onMode: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                        <option value="cool">cool</option>
+                        <option value="dry">dry</option>
+                        <option value="wind">wind</option>
+                        <option value="auto">auto</option>
+                      </select>
+                      <input type="number" min="16" max="30" value={forms.onTemp} onChange={(event) => setForms((prev) => ({ ...prev, onTemp: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Temp" />
+                    </div>
+                    <ActionButton onClick={() => saveTimer("on")} variant="secondary" full>Programar ligamento</ActionButton>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+                <p className="text-lg font-semibold text-white">Nova automacao</p>
+                <div className="mt-4 grid gap-3">
+                  <input type="time" value={forms.autoHora} onChange={(event) => setForms((prev) => ({ ...prev, autoHora: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" />
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <select value={forms.autoAcao} onChange={(event) => setForms((prev) => ({ ...prev, autoAcao: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                      <option value="ligar">ligar</option>
+                      <option value="desligar">desligar</option>
+                    </select>
+                    <select value={forms.autoModo} onChange={(event) => setForms((prev) => ({ ...prev, autoModo: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none">
+                      <option value="cool">cool</option>
+                      <option value="dry">dry</option>
+                      <option value="wind">wind</option>
+                      <option value="auto">auto</option>
+                    </select>
+                    <input type="number" min="16" max="30" value={forms.autoTemp} onChange={(event) => setForms((prev) => ({ ...prev, autoTemp: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="23" />
+                  </div>
+                  <ActionButton onClick={addAutomation} full>Adicionar automacao</ActionButton>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-lg font-semibold text-white">Rotinas ativas</p>
+                  <p className="mt-1 text-sm text-slate-400">Somente a funcionalidade aberta fica em foco.</p>
+                </div>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-400">{automations.length} regras</span>
+              </div>
+              <div className="mt-5 space-y-3">
+                {automations.length ? automations.map((rule) => (
+                  <div key={rule.id} className="rounded-3xl border border-white/10 bg-[#0c0c0f] p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="font-semibold text-white">{rule.hora}</p>
+                        <p className="mt-1 text-sm text-slate-400">{rule.acao} {rule.modo ? `· ${rule.modo}` : ""} {rule.temp ? `· ${rule.temp}°C` : ""}</p>
+                      </div>
+                      <button onClick={() => deleteAutomation(rule.id)} className="min-h-[44px] rounded-2xl border border-red-400/20 bg-red-500/10 px-4 text-sm font-semibold text-red-200">Remover</button>
+                    </div>
+                  </div>
+                )) : (
+                  <div className="rounded-3xl border border-dashed border-white/10 bg-[#0c0c0f] p-6 text-sm text-slate-400">Nenhuma automacao cadastrada.</div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+
+      case "ai":
+        return (
+          <div className="grid gap-5 xl:grid-cols-[1fr,1fr]">
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <p className="text-lg font-semibold text-white">Assistente inteligente</p>
+              <p className="mt-1 text-sm text-slate-400">Botoes acionam resposta imediata e exibem resultado em modal.</p>
+              <div className="mt-5 grid gap-3">
+                <ActionButton onClick={() => openAiModal("economia")} full>IA Economia</ActionButton>
+                <ActionButton onClick={() => openAiModal("perfil")} variant="secondary" full>Perfil IA</ActionButton>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <p className="text-lg font-semibold text-white">Ultimo insight</p>
+              <div className="mt-4 rounded-3xl border border-cyan-400/20 bg-cyan-400/10 p-5">
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-200">Perfil atual</p>
+                <p className="mt-3 text-3xl font-bold text-white">{aiProfile}</p>
+                <div className="mt-4 text-sm leading-7 text-slate-300">
+                  {aiContent ? (
+                    <>
+                      <p>{aiContent.mode === "economia" ? aiContent.data.advice : aiContent.data.insight}</p>
+                      {aiContent.mode === "economia" && aiContent.data.saving ? <p className="mt-3 text-cyan-200">Economia estimada: {aiContent.data.saving}</p> : null}
+                      {aiContent.mode === "perfil" && aiContent.data.suggestion ? <p className="mt-3 text-cyan-200">Sugestao: {aiContent.data.suggestion}</p> : null}
+                    </>
+                  ) : (
+                    <p>Clique em IA Economia ou Perfil IA para gerar uma analise inteligente baseada no seu uso.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "settings":
+        return (
+          <div className="grid gap-5 xl:grid-cols-[1.05fr,0.95fr]">
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <p className="text-lg font-semibold text-white">Backend e chaves</p>
+              <div className="mt-4 grid gap-3">
+                <input value={apiUrl} onChange={(event) => setApiUrl(event.target.value)} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="URL do Web App" />
+                <input value={forms.smartthingsToken} onChange={(event) => setForms((prev) => ({ ...prev, smartthingsToken: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Token SmartThings" />
+                <input value={forms.smartthingsDeviceId} onChange={(event) => setForms((prev) => ({ ...prev, smartthingsDeviceId: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Device ID" />
+                <input value={forms.deepseekApiKey} onChange={(event) => setForms((prev) => ({ ...prev, deepseekApiKey: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="API Key DeepSeek" />
+                <input type="password" value={forms.adminPin} onChange={(event) => setForms((prev) => ({ ...prev, adminPin: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="PIN admin atual" />
+                <input type="password" value={forms.newAdminPin} onChange={(event) => setForms((prev) => ({ ...prev, newAdminPin: event.target.value }))} className="min-h-[52px] rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 text-white outline-none" placeholder="Novo PIN admin" />
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <ActionButton onClick={saveConfig} full>Salvar configuracoes</ActionButton>
+                  <ActionButton onClick={clearApiKeys} variant="secondary" full>Limpar chaves</ActionButton>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-panel">
+              <p className="text-lg font-semibold text-white">Status atual</p>
+              <div className="mt-5 space-y-3">
+                {configStatus ? [["SmartThings", configStatus.smartthingsConfigured ? "Configurado" : "Nao configurado"], ["Device ID", configStatus.masked?.smartthingsDeviceId || "--"], ["DeepSeek", configStatus.deepseekConfigured ? "Configurado" : "Nao configurado"], ["PIN admin", configStatus.adminPinConfigured ? "Definido" : "Nao definido"]].map(([label, value]) => (
+                  <div key={label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#0c0c0f] px-4 py-4 text-sm">
+                    <span className="text-slate-400">{label}</span>
+                    <strong className="text-white">{value}</strong>
+                  </div>
+                )) : <div className="rounded-3xl border border-dashed border-white/10 bg-[#0c0c0f] p-6 text-sm text-slate-400">Sem resposta do backend para configuracoes.</div>}
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-app-bg bg-shell text-white">
+      <div className="mx-auto flex min-h-screen max-w-[1600px]">
+        <AnimatePresence>
+          {sidebarOpen ? <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-30 bg-black/70 md:hidden" onClick={() => setSidebarOpen(false)} /> : null}
+        </AnimatePresence>
+
+        <aside className={cn("fixed inset-y-0 left-0 z-40 w-[86vw] max-w-[320px] border-r border-white/10 bg-black/95 p-5 backdrop-blur transition-transform duration-300 md:static md:block md:w-[300px] md:translate-x-0", sidebarOpen ? "translate-x-0" : "-translate-x-full")}>
+          <div className="flex h-full flex-col">
+            <div className="rounded-[28px] border border-cyan-400/20 bg-cyan-400/10 p-4 shadow-glow">
+              <p className="text-xs uppercase tracking-[0.3em] text-cyan-200 font-bold">WindFree Pro</p>
+            </div>
+            <nav className="mt-6 grid gap-2">
+              {NAV_ITEMS.map((item) => (
+                <button key={item.id} onClick={() => navigate(item.id)} className={cn("rounded-3xl border px-4 py-4 text-left transition", activeView === item.id ? "border-cyan-400/20 bg-cyan-400/10 shadow-glow" : "border-white/10 bg-white/5")}>
+                  <p className="text-base font-semibold text-white">{item.label}</p>
+                  <p className="mt-1 text-sm text-slate-400">{item.subtitle}</p>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        <main className="flex min-h-screen flex-1 flex-col">
+          <header className="sticky top-0 z-20 border-b border-white/10 bg-black/80 px-4 py-4 backdrop-blur sm:px-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-3">
+                <button onClick={() => setSidebarOpen(true)} className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white md:hidden">=</button>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{viewMeta.label}</p>
+                  <h2 className="mt-1 text-2xl font-bold text-white">{viewMeta.subtitle}</h2>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-4">
+                <div className={cn("flex min-h-[52px] items-center rounded-2xl border px-4 text-sm font-medium", device.power ? "border-cyan-400/20 bg-cyan-400/10 text-cyan-200" : "border-white/10 bg-white/5 text-slate-300")}>{device.power ? "Sistema ligado" : "Sistema em espera"}</div>
+                <ActionButton onClick={() => syncNow()} disabled={syncing} full>{syncing ? "Sincronizando" : "Sincronizar"}</ActionButton>
+                <ActionButton onClick={() => openAiModal("economia")} variant="secondary" full>IA Economia</ActionButton>
+                <ActionButton onClick={() => openAiModal("perfil")} variant="secondary" full>Perfil IA</ActionButton>
+              </div>
+            </div>
+          </header>
+
+          <section className="flex-1 px-4 py-5 sm:px-6 sm:py-6">
+            <AnimatePresence mode="wait">
+              <motion.div key={activeView} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: 0.22, ease: "easeOut" }}>
+                {renderView()}
+              </motion.div>
+            </AnimatePresence>
+          </section>
+        </main>
+      </div>
+
+      <Modal open={aiModal.open} title={aiModal.title} subtitle={aiModal.subtitle} onClose={() => setAiModal((prev) => ({ ...prev, open: false }))}>
+        {aiModal.loading ? (
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div className="h-11 w-11 animate-spin rounded-full border-4 border-cyan-400/20 border-t-cyan-400"></div>
+            <p className="mt-4 text-sm text-slate-300">Processando a analise inteligente...</p>
+          </div>
+        ) : aiContent ? (
+          <div className="space-y-4 rounded-3xl border border-cyan-400/20 bg-cyan-400/10 p-5 text-sm leading-7 text-slate-200">
+            <p className="text-xs uppercase tracking-[0.28em] text-cyan-200">Resultado</p>
+            <p>{aiContent.mode === "economia" ? aiContent.data.advice : aiContent.data.insight}</p>
+            {aiContent.mode === "economia" && aiContent.data.saving ? <p>Economia estimada: {aiContent.data.saving}</p> : null}
+            {aiContent.mode === "perfil" && aiContent.data.suggestion ? <p>Sugestao: {aiContent.data.suggestion}</p> : null}
+            {aiContent.data.presetRecommended ? <p>Preset recomendado: {aiContent.data.presetRecommended}</p> : null}
+          </div>
+        ) : (
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-300">Nenhum resultado disponivel.</div>
+        )}
+      </Modal>
+
+      <AnimatePresence>
+        {toast ? (
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 18 }} className={cn("fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border px-4 py-4 text-sm shadow-panel", toast.tone === "error" ? "border-red-400/20 bg-red-500/10 text-red-100" : toast.tone === "success" ? "border-cyan-400/20 bg-cyan-400/10 text-cyan-100" : "border-white/10 bg-white/10 text-white")}>
+            {toast.message}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
-  `).join('');
+  );
 }
 
-async function addAuto() {
-  const rule = {
-    hora:  document.getElementById('auto-hora').value,
-    acao:  document.getElementById('auto-acao').value,
-    modo:  document.getElementById('auto-modo').value,
-    temp:  parseInt(document.getElementById('auto-temp').value) || 23,
-    ativo: true
-  };
-  if (!rule.hora) return showToast('Informe a hora', 'err');
-  await apiCallRaw({ action: 'addAuto', rule }, 'Automação adicionada ✓');
-  loadAutomations();
-}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 
-async function delAuto(id) {
-  await apiCallRaw({ action: 'delAuto', id }, 'Automação removida');
-  loadAutomations();
-}
 
-// ════════════════════════════════════════════════════════════
-//  IA
-// ════════════════════════════════════════════════════════════
 
-async function reqOpt() {
-  showToast('Consultando IA...', 'ai');
-  const data = await apiCallRaw({ action: 'reqOptimization' }, null);
-  if (!data) return;
-  renderAI(data, 'economia');
-}
-
-async function reqProfile() {
-  showToast('Analisando perfil...', 'ai');
-  const data = await apiCallRaw({ action: 'reqProfile' }, null);
-  if (!data) return;
-  renderAI(data, 'perfil');
-}
-
-function renderAI(d, tipo) {
-  const ptag = document.getElementById('ptag');
-  ptag.className = 'ptag ' + (d.profile || 'balanced');
-  ptag.textContent = d.profile || 'balanced';
-
-  let html = '';
-  if (tipo === 'economia') {
-    html = `
-      <div class="ai-body">${d.advice || '--'}</div>
-      ${d.saving ? `<div class="ai-tip">💰 ${d.saving}</div>` : ''}
-      <div class="ai-meta">
-        ${d.stats ? `<div class="ai-stat">Média: <span>${d.stats.medW}W</span></div>` : ''}
-        ${d.stats ? `<div class="ai-stat">Pico: <span>${d.stats.picoW}W</span></div>` : ''}
-        ${d.custoMes ? `<div class="ai-stat">Custo/mês: <span>${d.custoMes}</span></div>` : ''}
-      </div>`;
-  } else {
-    html = `
-      <div class="ai-body">${d.insight || '--'}</div>
-      ${d.suggestion ? `<div class="ai-tip">💡 ${d.suggestion}</div>` : ''}
-      ${d.presetRecommended ? `<div class="ai-meta"><div class="ai-stat">Preset recomendado: <span>${d.presetRecommended}</span></div></div>` : ''}`;
-  }
-
-  document.getElementById('ai-content').innerHTML = html;
-}
-
-// ════════════════════════════════════════════════════════════
-//  GRÁFICO DE HISTÓRICO
-// ════════════════════════════════════════════════════════════
-
-async function loadHistory() {
-  const data = await apiCallRaw({ action: 'getHistory', n: 48 }, null);
-  if (!data || !data.labels) return;
-
-  const ctx = document.getElementById('histChart').getContext('2d');
-  if (histChart) histChart.destroy();
-
-  histChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: data.labels,
-      datasets: [
-        {
-          label: 'Potência (W)',
-          data: data.watts,
-          borderColor: '#f5a720',
-          backgroundColor: 'rgba(245,167,32,0.08)',
-          borderWidth: 1.5,
-          pointRadius: 0,
-          tension: 0.4,
-          fill: true,
-          yAxisID: 'y'
-        },
-        {
-          label: 'Temp. Amb. (°C)',
-          data: data.temps,
-          borderColor: '#4f8ef7',
-          backgroundColor: 'transparent',
-          borderWidth: 1.5,
-          pointRadius: 0,
-          tension: 0.4,
-          yAxisID: 'y1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: { legend: { labels: { color: '#7880a0', font: { family: 'JetBrains Mono', size: 10 } } } },
-      scales: {
-        x:  { ticks: { color: '#3d4460', font: { size: 9 }, maxTicksLimit: 8 }, grid: { color: 'rgba(255,255,255,0.04)' } },
-        y:  { ticks: { color: '#f5a720', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' }, position: 'left' },
-        y1: { ticks: { color: '#4f8ef7', font: { size: 9 } }, grid: { display: false }, position: 'right' }
-      }
-    }
-  });
-}
-
-// ════════════════════════════════════════════════════════════
-//  CALCULADORA DE CUSTO
-// ════════════════════════════════════════════════════════════
-
-function recalcCost() {
-  const rate  = parseFloat(document.getElementById('kwh-rate').value) || 1.15;
-  const hours = parseFloat(document.getElementById('daily-h').value)  || 10;
-  const watts = state.potencia || 0;
-
-  if (!watts) return;
-
-  const kw    = watts / 1000;
-  const hora  = kw * rate;
-  const dia   = hora * hours;
-  const sem   = dia * 7;
-  const mes   = dia * 30;
-
-  const fmt = v => 'R$ ' + v.toFixed(2).replace('.', ',');
-  document.getElementById('c-hora').textContent   = fmt(hora);
-  document.getElementById('c-dia').textContent    = fmt(dia);
-  document.getElementById('c-semana').textContent = fmt(sem);
-  document.getElementById('c-mes').textContent    = fmt(mes);
-
-  drawCostChart(hora, dia, sem, mes);
-}
-
-function drawCostChart(hora, dia, sem, mes) {
-  const ctx = document.getElementById('costChart').getContext('2d');
-  if (costChart) costChart.destroy();
-  costChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Hora', 'Dia', 'Semana', 'Mês'],
-      datasets: [{
-        data: [hora, dia, sem, mes],
-        backgroundColor: ['rgba(245,167,32,.3)', 'rgba(245,167,32,.45)', 'rgba(245,167,32,.6)', 'rgba(245,167,32,.8)'],
-        borderColor: '#f5a720',
-        borderWidth: 1,
-        borderRadius: 5
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#3d4460', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-        y: { ticks: { color: '#f5a720', font: { size: 9 }, callback: v => 'R$ ' + v.toFixed(2) }, grid: { color: 'rgba(255,255,255,0.04)' } }
-      }
-    }
-  });
-}
-
-// ════════════════════════════════════════════════════════════
-//  AUTO-SYNC & COUNTDOWN
-// ════════════════════════════════════════════════════════════
-
-function changeRefresh() {
-  refreshInterval = parseInt(document.getElementById('ref-sel').value);
-  resetAutoSync();
-}
-
-function resetAutoSync() {
-  if (refreshTimer) clearInterval(refreshTimer);
-  
-  // Usar intervalo baseado na visibilidade da página
-  const isPageVisible = !document.hidden;
-  const interval = isPageVisible ? refreshInterval : backgroundInterval;
-  
-  refreshTimer = setInterval(syncNow, interval * 1000);
-  resetCountdown(interval);
-}
-
-function resetCountdown(interval = null) {
-  const currentInterval = interval || refreshInterval;
-  countdown = currentInterval;
-  if (countdownTimer) clearInterval(countdownTimer);
-  countdownTimer = setInterval(() => {
-    countdown--;
-    const el = document.getElementById('cdwn');
-    if (el) el.textContent = '⟳ ' + countdown + 's';
-    if (countdown <= 0) countdown = currentInterval;
-  }, 1000);
-}
-
-// ════════════════════════════════════════════════════════════
-//  PREFERÊNCIAS (localStorage)
-// ════════════════════════════════════════════════════════════
-
-function savePref(key, val) {
-  try { localStorage.setItem('wfp_' + key, val); } catch(e) {}
-}
-
-function loadPrefs() {
-  try {
-    const r = localStorage.getItem('wfp_r');
-    const h = localStorage.getItem('wfp_h');
-    if (r) document.getElementById('kwh-rate').value = r;
-    if (h) document.getElementById('daily-h').value  = h;
-  } catch(e) {}
-}
-
-// ════════════════════════════════════════════════════════════
-//  TOAST
-// ════════════════════════════════════════════════════════════
-
-let toastTimer = null;
-function showToast(msg, type) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className   = 'show ' + (type || 'ok');
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.className = ''; }, 3000);
-}
-
-// ════════════════════════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════════════════════════
-
-window.addEventListener('DOMContentLoaded', () => {
-  loadPrefs();
-  syncNow();
-  loadHistory();
-  loadAutomations();
-  updateTimerStatus();
-  resetAutoSync();
-});
-</script>
+  </script>
 </body>
 </html>
-
